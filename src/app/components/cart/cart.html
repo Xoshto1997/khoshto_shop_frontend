@@ -1,0 +1,101 @@
+<div class="max-w-5xl mx-auto px-4 py-16 animate-fadeIn">
+  <div class="flex items-center gap-3 mb-10 border-b border-slate-100 pb-5">
+    <svg class="w-8 h-8 text-indigo-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/>
+    </svg>
+    <h1 class="text-3xl font-black text-slate-900 tracking-tight">თქვენი კალათა</h1>
+  </div>
+
+  @if (cartService.cartItemsCount() === 0) {
+    <div class="text-center py-24 bg-gradient-to-b from-slate-50/50 to-white rounded-[32px] border border-slate-100 shadow-sm">
+      <div class="w-20 h-20 bg-indigo-50 text-indigo-600 rounded-full flex items-center justify-center mx-auto mb-6 animate-pulse">
+        <svg class="w-10 h-10" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 10.5V6a3.75 3.75 0 10-7.5 0v4.5m11.356-1.993l1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 01-1.12-1.243l1.264-12A1.125 1.125 0 015.513 7.5h12.974c.576 0 1.059.435 1.119 1.007zM8.625 10.5a.375.375 0 11-.75 0 .375.375 0 01.75 0zm7.5 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z"/>
+        </svg>
+      </div>
+      <h3 class="text-2xl font-bold text-slate-800 mb-2">კალათა ცარიელია</h3>
+      <p class="text-slate-400 mb-8 max-w-sm mx-auto text-sm leading-relaxed">თქვენს კალათაში ჯერ არაფერია. გადახედეთ ჩვენს კატალოგს და იპოვეთ საუკეთესო შეთავაზებები.</p>
+      <a routerLink="/" class="inline-flex bg-indigo-600 text-white px-8 py-3.5 rounded-2xl text-sm font-semibold hover:bg-indigo-700 transition-all duration-300 hover:shadow-lg hover:shadow-indigo-600/20 active:scale-[0.98]">
+        საყიდლებზე გადასვლა
+      </a>
+    </div>
+  } @else {
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
+      
+      <div class="lg:col-span-2 flex flex-col gap-4">
+        @for (item of cartService.cart()?.items; track item.id) {
+          <div class="flex items-center gap-6 bg-white p-5 rounded-3xl border border-slate-100 shadow-[0_2px_8px_rgba(0,0,0,0.02)] hover:shadow-[0_8px_24px_rgba(148,163,184,0.12)] transition-all duration-300 hover:-translate-y-0.5">
+            
+            <div class="w-24 h-24 bg-slate-50/80 rounded-2xl p-2 flex items-center justify-center overflow-hidden flex-shrink-0 border border-slate-100 shadow-inner">
+              @if (item.product.imageData) {
+                <img [src]="'data:image/jpeg;base64,' + item.product.imageData" [alt]="item.product.productName" class="max-h-full max-w-full object-contain mix-blend-multiply filter drop-shadow-sm transition duration-300 transform hover:scale-105">
+              } @else {
+                <svg class="w-8 h-8 text-slate-300" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M21 7.5l-9-5.25L3 7.5m18 0l-9 5.25m9-5.25v9l-9 5.25M3 7.5l9 5.25M3 7.5v9l9 5.25m0-9v9"/>
+                </svg>
+              }
+            </div>
+
+            <div class="flex-grow">
+              <h3 class="font-bold text-slate-800 text-base leading-snug mb-1.5 hover:text-indigo-600 transition duration-200">{{ item.product.productName }}</h3>
+              <p class="text-indigo-600 font-black text-base">{{ currencyService.formatPrice(item.product.price) }}</p>
+            </div>
+
+            <div class="flex items-center gap-1.5 bg-slate-50 p-1.5 rounded-2xl border border-slate-100/80">
+              <button (click)="decreaseQuantity(item.product.id, item.quantity)" class="w-8 h-8 flex items-center justify-center text-slate-500 hover:bg-white hover:text-indigo-600 rounded-xl hover:shadow-sm transition-all duration-200 active:scale-90">
+                <svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 12h-15"/></svg>
+              </button>
+              <span class="text-sm font-black text-slate-800 w-6 text-center select-none">{{ item.quantity }}</span>
+              <button (click)="increaseQuantity(item.product.id, item.quantity)" class="w-8 h-8 flex items-center justify-center text-slate-500 hover:bg-white hover:text-indigo-600 rounded-xl hover:shadow-sm transition-all duration-200 active:scale-90">
+                <svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"/></svg>
+              </button>
+            </div>
+
+            <button (click)="removeItem(item.product.id)" class="text-slate-300 hover:text-red-500 hover:bg-red-50 rounded-2xl p-3 transition-all duration-200 active:scale-95">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+              </svg>
+            </button>
+          </div>
+        }
+      </div>
+
+      <div class="bg-white p-6 rounded-[32px] border border-slate-100 shadow-[0_4px_20px_rgba(0,0,0,0.03)] h-fit flex flex-col gap-5 lg:sticky lg:top-6">
+        <h3 class="font-black text-slate-800 text-lg pb-1">შეკვეთის რეზიუმე</h3>
+        
+        <div class="space-y-3 bg-slate-50/50 p-4 rounded-2xl border border-slate-100/50">
+          <div class="flex justify-between items-center text-xs font-semibold text-slate-500">
+            <span>პროდუქტების ჯამი:</span>
+            <span class="text-slate-800 font-bold">{{ cartService.cartItemsCount() }} ცალი</span>
+          </div>
+          <div class="flex justify-between items-center text-xs font-semibold text-slate-500">
+            <span>მიწოდება:</span>
+            <span class="text-emerald-600 font-bold">უფასო</span>
+          </div>
+        </div>
+
+        <div class="flex justify-between items-center pt-2 px-1">
+          <span class="text-sm font-bold text-slate-700">სულ გადასახდელი:</span>
+          <span class="text-2xl font-black text-indigo-600 tracking-tight">{{ currencyService.formatPrice(cartService.cartTotalPrice()) }}</span>
+        </div>
+
+       <button 
+          (click)="onCheckout()"
+          [disabled]="isLoading()"
+          class="w-full bg-slate-900 text-white py-4 rounded-2xl font-bold text-sm transition-all duration-300 hover:bg-indigo-600 hover:shadow-lg hover:shadow-indigo-600/20 active:scale-[0.98] mt-2 disabled:bg-slate-300 flex items-center justify-center gap-2">
+          
+          @if (isLoading()) {
+            <svg class="animate-spin h-5 w-5 text-white" fill="none" viewBox="0 0 24 24">
+              <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+              <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+            </svg>
+            <span>მიმდინარეობს გადამისამართება...</span>
+          } @else {
+            <span>შეკვეთის გაფორმება</span>
+          }
+        </button>
+      </div>
+
+    </div>
+  }
+</div>

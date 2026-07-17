@@ -1,0 +1,57 @@
+<div 
+  [routerLink]="['/product', product().id]" 
+  [state]="{ 
+    id: product().id, 
+    productName: product().productName, 
+    imageData: product().imageData, 
+    price: product().price, 
+    description: product().description 
+  }" 
+  class="bg-white rounded-[28px] shadow-[0_2px_8px_rgba(0,0,0,0.01)] hover:shadow-[0_12px_32px_rgba(148,163,184,0.12)] border border-slate-100 p-5 transition-all duration-300 flex flex-col justify-between group cursor-pointer hover:-translate-y-1">
+  
+  <div>
+    <div class="bg-slate-50/80 h-52 w-full rounded-2xl flex items-center justify-center mb-5 relative overflow-hidden border border-slate-100/50 shadow-inner">
+      @if (product().imageData) {
+        <img [src]="'data:image/jpeg;base64,' + product().imageData" 
+             [alt]="product().productName" 
+             class="h-full w-full object-cover mix-blend-multiply group-hover:scale-105 transition-transform duration-500 ease-out">
+      } @else {
+        <svg class="w-12 h-12 text-slate-300 group-hover:scale-105 transition-transform duration-500 ease-out" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M21 7.5l-9-5.25L3 7.5m18 0l-9 5.25m9-5.25v9l-9 5.25M3 7.5l9 5.25M3 7.5v9l9 5.25m0-9v9"/>
+        </svg>
+      }
+      <span class="absolute top-3 right-3 bg-indigo-600 text-white text-[10px] font-black uppercase tracking-wider px-2.5 py-1 rounded-lg shadow-sm backdrop-blur-sm bg-opacity-95">
+        New
+      </span>
+    </div>
+    
+    <h3 class="text-base font-bold text-slate-800 mb-2 group-hover:text-indigo-600 transition-colors duration-200 line-clamp-1 px-0.5">
+      {{ product().productName }}
+    </h3>
+
+    <div class="flex items-baseline gap-1 mb-2 px-0.5">
+      <span class="text-xs font-bold text-slate-400 uppercase tracking-wider mr-1">ფასი:</span>
+      <span class="text-xl font-bold text-gray-900">
+        {{ currencyService.formatPrice(product().price) }}
+      </span>
+    </div>
+    
+    <p class="text-slate-400 text-xs leading-relaxed line-clamp-2 mb-5 px-0.5">
+      {{ product().description }}
+    </p>
+  </div>
+  
+  <div class="flex items-center gap-2 mt-auto pt-4 border-t border-slate-50">
+    <button (click)="$event.stopPropagation(); productService.deleteProduct(product().id!)" 
+            class="bg-rose-50 hover:bg-rose-100 text-rose-600 p-3 rounded-xl transition-all duration-200 active:scale-90 flex items-center justify-center border border-rose-100/30"
+            title="პროდუქტის წაშლა">
+      <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+      </svg>
+    </button>
+    
+    <button class="flex-1 bg-slate-900 hover:bg-indigo-600 text-white text-xs font-bold py-3.5 rounded-xl transition-all duration-300 active:scale-[0.98] shadow-sm hover:shadow-md hover:shadow-indigo-600/10">
+      კალათაში დამატება
+    </button>
+  </div>
+</div>
