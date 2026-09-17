@@ -1,0 +1,124 @@
+<div class="max-w-xl mx-auto p-6 bg-[#1A0F24] border border-[#3D1A45] rounded-2xl shadow-xl text-purple-100 mt-8">
+  <h2 class="text-xl font-bold text-white mb-6 flex items-center gap-2">
+    <span class="w-3 h-3 rounded-full bg-[#E08A4E]"></span>
+    პაროლის შეცვლა
+  </h2>
+
+  <!-- წარმატების შეტყობინება -->
+  @if (successMessage()) {
+    <div class="mb-4 p-3 bg-emerald-950/60 border border-emerald-500/40 text-emerald-300 rounded-xl text-xs font-bold">
+      {{ successMessage() }}
+    </div>
+  }
+
+  <!-- შეცდომის შეტყობინება -->
+  @if (errorMessage()) {
+    <div class="mb-4 p-3 bg-rose-950/60 border border-rose-500/40 text-rose-300 rounded-xl text-xs font-bold">
+      {{ errorMessage() }}
+    </div>
+  }
+
+  <form (ngSubmit)="onChangePassword()" class="space-y-4">
+    
+    <!-- 1. მიმდინარე პაროლი -->
+    <div>
+      <label class="block text-xs font-bold text-purple-200 mb-1.5">მიმდინარე პაროლი *</label>
+      <div class="relative">
+        <input 
+          [type]="showCurrentPassword() ? 'text' : 'password'" 
+          [(ngModel)]="passwordData.currentPassword" 
+          name="currentPassword"
+          placeholder="••••••••"
+          class="w-full bg-[#0D0712] border border-[#3D1A45] rounded-xl pl-3.5 pr-10 py-2.5 text-xs text-white focus:outline-none focus:border-[#C86D2A] transition-all" />
+        
+        <button 
+          type="button" 
+          (click)="showCurrentPassword.set(!showCurrentPassword())"
+          class="absolute right-3 top-1/2 -translate-y-1/2 text-purple-400 hover:text-white transition-colors cursor-pointer">
+          @if (showCurrentPassword()) {
+            <!-- თვალი დახუჭული (Hide) -->
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858-5.908a8.98 8.98 0 012.122-.363c4.478 0 8.268 2.943 9.542 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21f-9-9" />
+            </svg>
+          } @else {
+            <!-- თვალი ღია (Show) -->
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+            </svg>
+          }
+        </button>
+      </div>
+    </div>
+
+    <!-- 2. ახალი პაროლი -->
+    <div>
+      <label class="block text-xs font-bold text-purple-200 mb-1.5">ახალი პაროლი *</label>
+      <div class="relative">
+        <input 
+          [type]="showNewPassword() ? 'text' : 'password'" 
+          [(ngModel)]="passwordData.newPassword" 
+          name="newPassword"
+          placeholder="მინიმუმ 6 სიმბოლო"
+          class="w-full bg-[#0D0712] border border-[#3D1A45] rounded-xl pl-3.5 pr-10 py-2.5 text-xs text-white focus:outline-none focus:border-[#C86D2A] transition-all" />
+        
+        <button 
+          type="button" 
+          (click)="showNewPassword.set(!showNewPassword())"
+          class="absolute right-3 top-1/2 -translate-y-1/2 text-purple-400 hover:text-white transition-colors cursor-pointer">
+          @if (showNewPassword()) {
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858-5.908a8.98 8.98 0 012.122-.363c4.478 0 8.268 2.943 9.542 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21f-9-9" />
+            </svg>
+          } @else {
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+            </svg>
+          }
+        </button>
+      </div>
+    </div>
+
+    <!-- 3. ახალი პაროლის დადასტურება -->
+    <div>
+      <label class="block text-xs font-bold text-purple-200 mb-1.5">გაიმეორეთ ახალი პაროლი *</label>
+      <div class="relative">
+        <input 
+          [type]="showConfirmPassword() ? 'text' : 'password'" 
+          [(ngModel)]="passwordData.confirmPassword" 
+          name="confirmPassword"
+          placeholder="••••••••"
+          class="w-full bg-[#0D0712] border border-[#3D1A45] rounded-xl pl-3.5 pr-10 py-2.5 text-xs text-white focus:outline-none focus:border-[#C86D2A] transition-all" />
+        
+        <button 
+          type="button" 
+          (click)="showConfirmPassword.set(!showConfirmPassword())"
+          class="absolute right-3 top-1/2 -translate-y-1/2 text-purple-400 hover:text-white transition-colors cursor-pointer">
+          @if (showConfirmPassword()) {
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858-5.908a8.98 8.98 0 012.122-.363c4.478 0 8.268 2.943 9.542 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21f-9-9" />
+            </svg>
+          } @else {
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+            </svg>
+          }
+        </button>
+      </div>
+    </div>
+
+    <!-- ღილაკი -->
+    <button 
+      type="submit" 
+      [disabled]="isSubmitting()"
+      class="w-full mt-2 py-3 bg-gradient-to-r from-[#C86D2A] to-[#B45309] hover:from-[#D97706] hover:to-[#C86D2A] text-white font-black text-xs rounded-xl transition-all shadow-md active:scale-95 cursor-pointer disabled:opacity-50">
+      @if (isSubmitting()) {
+        <span>მიმდინარეობს განახლება...</span>
+      } @else {
+        <span>პაროლის განახლება</span>
+      }
+    </button>
+  </form>
+</div>

@@ -1,10 +1,10 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { RouterModule, RouterOutlet } from '@angular/router';
-import { AuthService } from './services/auth';
+import { AuthService } from './core/services/auth';
 import { CommonModule } from '@angular/common';
-import { Footer } from './ui/footer/footer';
-import { CartService } from './services/cart-service';
-import { CurrencyService } from './services/currency-service';
+import { Footer } from './shared/ui/footer/footer';
+import { CartService } from './core/services/cart-service';
+import { CurrencyService } from './core/services/currency-service';
 
 @Component({
   selector: 'app-root',
@@ -18,10 +18,16 @@ export class App {
   public currentUser = this.authService.currentUser;
   public readonly currencyService = inject(CurrencyService);
 
+
+
+
+
+
   ngOnInit() {
     if (this.authService.isLoggedIn()) {
       this.cartService.loadCart();
     }
+    
   }
 
   get isAdminUser(): boolean {

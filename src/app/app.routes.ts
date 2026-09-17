@@ -1,31 +1,59 @@
 import { Routes } from '@angular/router';
-import { ProductListComponent } from './components/product-list/product-list';
-import {ProductFormComponent } from './components/product-form/product-form';
-import { Register } from './components/register/register';
-import { LoginComponent } from './components/login/login';
-import { authGuard } from './guards/auth-guard';
-import { ProductDetails } from './components/productdetails/productdetails';
-import { Cart } from './components/cart/cart';
-import { ForgotPassword } from './components/forgot-password/forgot-password';
-import { ResetPassword } from './components/reset-password/reset-password';
-import { adminGuard } from './guards/admin-guard-guard';
+import { authGuard } from './core/guards/auth-guard';
+import { guestGuard } from './core/guards/guest-guard-guard'; // 👈 დააიმპორტე guestGuard
+import { adminGuard } from './core/guards/admin-guard-guard';
+import { ProductListComponent } from './features/products/product-list/product-list';
 
 export const routes: Routes = [
   { path: '', component: ProductListComponent },
-  { path: 'add-product', component: ProductFormComponent },
-  
-  // 🔒 ვადებთ დაცვას: დალოგინებული აქ ვეღარ შევა!
-  { path: 'login', component: LoginComponent, canActivate: [authGuard] },
-  { path: 'register', component: Register, canActivate: [authGuard] },
-  { path: 'product/:id', component: ProductDetails },
-   // დეტალების გვერდი კონკრეტული პროდუქტისთვის
-   { path: 'cart', component: Cart },
-   { path: 'forgot-password', component: ForgotPassword },
-  { path: 'reset-password', component: ResetPassword },
+
+  // 🔓 სტუმრების გვერდები (გამოიყენე guestGuard)
+  {
+    path: 'login',
+    loadComponent: () => import('./features/auth/login/login').then((c) => c.LoginComponent),
+    canActivate: [guestGuard], // 👈 შეცვალე guestGuard-ით
+  },
+  {
+    path: 'register',
+    loadComponent: () => import('./features/auth/register/register').then((c) => c.Register),
+    canActivate: [guestGuard], // 👈 შეცვალე guestGuard-ით
+  },
+
+  // 🔒 იუზერის დაცული გვერდები (გამოიყენე სწორი authGuard)
+  {
+    path: 'profile',
+    loadComponent: () => import('./components/profile/profile').then((m) => m.Profile),
+    canActivate: [authGuard] // 👈 ახლა უკვე ნამდვილი authGuard დაიცავს!
+  },
+  {
+    path: 'my-orders',
+    loadComponent: () => import('./user/user-orders/user-orders').then((c) => c.UserOrdersComponent),
+    canActivate: [authGuard] // 👈 აქვე დაადე, რომ შეკვეთებიც დაცული იყოს!
+  },
+
+  // 🛡️ ადმინის გვერდები (adminGuard)
+  {
+    path: 'add-product',
+    loadComponent: () => import('./features/products/product-form/product-form').then((c) => c.ProductFormComponent),
+    canActivate: [adminGuard],
+  },
   {
     path: 'admin/orders',
-    loadComponent: () => import('./components/admin-orders/admin-orders').then(m => m.AdminOrders),
-    canActivate: [adminGuard] // 🛡️ აი ეს იცავს ამ როუტს!
+    loadComponent: () => import('./admin/admin-orders/admin-orders').then((c) => c.AdminOrders),
+    canActivate: [adminGuard],
   },
-  { path: '**', redirectTo: '' }
+  {
+    path: 'admin/analytics',
+    loadComponent: () => import('./admin/admin-analytics/admin-analytics').then((m) => m.AdminAnalytics),
+    canActivate: [adminGuard],
+  },
+
+  // საჯარო გვერდები
+  { path: 'product/:id', loadComponent: () => import('./features/products/productdetails/productdetails').then((c) => c.ProductDetails) },
+  { path: 'cart', loadComponent: () => import('./cart/cart/cart').then((c) => c.Cart) },
+  { path: 'forgot-password', loadComponent: () => import('./features/auth/forgot-password/forgot-password').then((c) => c.ForgotPassword) },
+  { path: 'reset-password', loadComponent: () => import('./features/auth/reset-password/reset-password').then((c) => c.ResetPassword) },
+  { path: 'order-success', loadComponent: () => import('./admin/order-success/order-success').then((c) => c.OrderSuccess) },
+
+  { path: '**', redirectTo: '' },
 ];

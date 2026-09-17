@@ -1,0 +1,168 @@
+<div class="max-w-5xl mx-auto px-4 py-16 animate-fadeIn text-purple-100">
+  
+  <header class="flex items-center gap-3.5 mb-10 border-b border-purple-900/40 pb-5">
+    <div class="p-3 bg-amber-600/10 text-amber-500 border border-amber-600/30 rounded-2xl shadow-inner">
+      <svg class="w-7 h-7" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/>
+      </svg>
+    </div>
+    <div>
+      <span class="text-[10px] uppercase tracking-widest font-extrabold text-amber-400 bg-amber-500/15 px-2.5 py-0.5 rounded border border-amber-500/30">3DSTUDIO</span>
+      <h1 class="text-3xl font-black text-white tracking-tight">თქვენი 3D კალათა</h1>
+    </div>
+  </header>
+
+  @if (cartService.cartItemsCount() === 0) {
+    <div class="text-center py-24 bg-[#1a0b22]/70 rounded-[32px] border border-purple-900/40 backdrop-blur-md shadow-2xl">
+      <div class="w-20 h-20 bg-amber-500/10 border border-amber-500/20 text-amber-400 rounded-3xl flex items-center justify-center mx-auto mb-6 animate-pulse shadow-inner">
+        <svg class="w-10 h-10" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" aria-hidden="true">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 10.5V6a3.75 3.75 0 10-7.5 0v4.5m11.356-1.993l1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 01-1.12-1.243l1.264-12A1.125 1.125 0 015.513 7.5h12.974c.576 0 1.059.435 1.119 1.007zM8.625 10.5a.375.375 0 11-.75 0 .375.375 0 01.75 0zm7.5 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z"/>
+        </svg>
+      </div>
+      <h2 class="text-2xl font-black text-white mb-2">კალათა ცარიელია</h2>
+      <p class="text-purple-200/70 mb-8 max-w-sm mx-auto text-sm leading-relaxed">თქვენს კალათაში 3D ნივთები ჯერ არ არის. გადახედეთ ჩვენს ექსკლუზიურ კოლექციას.</p>
+      <a routerLink="/" class="inline-flex items-center gap-2 bg-gradient-to-r from-amber-600 via-amber-500 to-amber-600 text-purple-950 px-8 py-3.5 rounded-2xl text-sm font-extrabold hover:brightness-110 transition-all duration-300 shadow-lg shadow-amber-600/20 active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500">
+        <span>კატალოგში გადასვლა</span>
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"/></svg>
+      </a>
+    </div>
+  } @else {
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
+      
+      <section class="lg:col-span-2 flex flex-col gap-4" aria-label="კალათის პროდუქტები">
+        @for (item of cartService.cart()?.items; track item.id) {
+          <div class="flex items-center gap-5 bg-[#1a0b22]/80 backdrop-blur-md p-5 rounded-3xl border border-purple-900/40 shadow-xl hover:border-purple-700/50 transition-all duration-300 hover:-translate-y-0.5">
+            
+            <div class="w-24 h-24 bg-[#0d0512] rounded-2xl p-2 flex items-center justify-center overflow-hidden flex-shrink-0 border border-purple-900/60 relative group">
+              @if (item.product.coverImage) {
+                <img [src]="item.product.coverImage" [alt]="item.product.productName" loading="lazy" class="max-h-full max-w-full object-contain filter drop-shadow-[0_4px_12px_rgba(0,0,0,0.6)] transition duration-300 transform group-hover:scale-110">
+              } @else if (item.product.imageData) {
+                <img [src]="'data:image/jpeg;base64,' + item.product.imageData" [alt]="item.product.productName" loading="lazy" class="max-h-full max-w-full object-contain filter drop-shadow-[0_4px_12px_rgba(0,0,0,0.6)] transition duration-300 transform group-hover:scale-110">
+              } @else {
+                <svg class="w-8 h-8 text-purple-400/40" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" aria-hidden="true">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M21 7.5l-9-5.25L3 7.5m18 0l-9 5.25m9-5.25v9l-9 5.25M3 7.5l9 5.25M3 7.5v9l9 5.25m0-9v9"/>
+                </svg>
+              }
+            </div>
+
+            <div class="flex-grow min-w-0">
+              <h3 class="font-bold text-white text-base leading-snug mb-1.5 truncate hover:text-amber-400 transition duration-200">{{ item.product.productName }}</h3>
+              <p class="text-amber-400 font-mono font-black text-base">{{ currencyService.formatPrice(item.product.price) }}</p>
+            </div>
+
+            <div class="flex items-center gap-1 bg-[#0d0512] p-1.5 rounded-2xl border border-purple-900/60">
+              <button 
+                type="button"
+                aria-label="რაოდენობის შემცირება"
+                (click)="item.product.id && decreaseQuantity(item.product.id, item.quantity)" 
+                class="w-8 h-8 flex items-center justify-center text-purple-300 hover:bg-purple-900/50 hover:text-amber-400 rounded-xl transition-all duration-200 active:scale-90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-amber-500">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 12h-15"/></svg>
+              </button>
+              <span class="text-sm font-black text-white w-7 text-center font-mono select-none">{{ item.quantity }}</span>
+              <button 
+                type="button"
+                aria-label="რაოდენობის გაზრდა"
+                (click)="item.product.id && increaseQuantity(item.product.id, item.quantity)" 
+                class="w-8 h-8 flex items-center justify-center text-purple-300 hover:bg-purple-900/50 hover:text-amber-400 rounded-xl transition-all duration-200 active:scale-90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-amber-500">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"/></svg>
+              </button>
+            </div>
+
+            <button 
+              type="button"
+              aria-label="პროდუქტის წაშლა"
+              (click)="item.product.id && removeItem(item.product.id)" 
+              class="text-purple-400/60 hover:text-rose-400 hover:bg-rose-500/10 rounded-2xl p-3 transition-all duration-200 active:scale-95 border border-transparent hover:border-rose-500/20 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-rose-500">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+              </svg>
+            </button>
+          </div>
+        }
+      </section>
+
+      <aside class="bg-[#1a0b22]/90 backdrop-blur-md p-6 rounded-[32px] border border-purple-900/50 shadow-2xl h-fit flex flex-col gap-4 lg:sticky lg:top-6">
+        <h2 class="font-black text-white text-lg pb-1 border-b border-purple-900/50">შეკვეთის რეზიუმე</h2>
+        
+        <div class="space-y-3 bg-[#0d0512]/80 p-4 rounded-2xl border border-purple-900/40 font-mono">
+          <div class="flex justify-between items-center text-xs font-semibold text-purple-200/70">
+            <span>პროდუქტები:</span>
+            <span class="text-white font-bold">{{ cartService.cartItemsCount() }} ცალი</span>
+          </div>
+          <div class="flex justify-between items-center text-xs font-semibold text-purple-200/70">
+            <span>მიწოდება:</span>
+            <span class="text-emerald-400 font-bold bg-emerald-500/10 px-2 py-0.5 rounded border border-emerald-500/20">უფასო</span>
+          </div>
+        </div>
+
+        <div class="flex justify-between items-center pt-1 px-1">
+          <span class="text-sm font-bold text-purple-100">სულ გადასახდელი:</span>
+          <span class="text-2xl font-black text-amber-400 font-mono tracking-tight">{{ currencyService.formatPrice(cartService.cartTotalPrice()) }}</span>
+        </div>
+
+        <fieldset class="space-y-2.5 pt-3 border-t border-purple-900/50 border-none p-0 m-0">
+          <legend class="text-xs font-bold text-purple-300/80 block px-1 mb-2">გადახდის მეთოდი:</legend>
+          
+          <div class="grid grid-cols-1 gap-2.5">
+            
+            <label 
+              (click)="selectedPaymentMethod.set('BANK_TRANSFER')"
+              [class.border-amber-500]="selectedPaymentMethod() === 'BANK_TRANSFER'"
+              [class.bg-amber-500/10]="selectedPaymentMethod() === 'BANK_TRANSFER'"
+              class="flex items-center justify-between p-3.5 rounded-2xl border border-purple-900/60 bg-[#0d0512]/60 cursor-pointer transition-all duration-200 hover:border-purple-700/80 select-none">
+              <div class="flex items-center gap-3">
+                <div class="w-4 h-4 rounded-full border flex items-center justify-center p-0.5 transition-colors"
+                     [class.border-amber-500]="selectedPaymentMethod() === 'BANK_TRANSFER'"
+                     [class.border-purple-700]="selectedPaymentMethod() !== 'BANK_TRANSFER'">
+                  @if (selectedPaymentMethod() === 'BANK_TRANSFER') {
+                    <div class="w-full h-full bg-amber-500 rounded-full"></div>
+                  }
+                </div>
+                <span class="text-xs font-extrabold text-white">საბანკო გადარიცხვა</span>
+              </div>
+              <span class="text-[10px] text-amber-400 bg-amber-500/10 px-2 py-0.5 rounded border border-amber-500/20 font-bold">ინვოისით</span>
+            </label>
+
+            <label 
+              (click)="selectedPaymentMethod.set('CASH_ON_DELIVERY')"
+              [class.border-amber-500]="selectedPaymentMethod() === 'CASH_ON_DELIVERY'"
+              [class.bg-amber-500/10]="selectedPaymentMethod() === 'CASH_ON_DELIVERY'"
+              class="flex items-center justify-between p-3.5 rounded-2xl border border-purple-900/60 bg-[#0d0512]/60 cursor-pointer transition-all duration-200 hover:border-purple-700/80 select-none">
+              <div class="flex items-center gap-3">
+                <div class="w-4 h-4 rounded-full border flex items-center justify-center p-0.5 transition-colors"
+                     [class.border-amber-500]="selectedPaymentMethod() === 'CASH_ON_DELIVERY'"
+                     [class.border-purple-700]="selectedPaymentMethod() !== 'CASH_ON_DELIVERY'">
+                  @if (selectedPaymentMethod() === 'CASH_ON_DELIVERY') {
+                    <div class="w-full h-full bg-amber-500 rounded-full"></div>
+                  }
+                </div>
+                <span class="text-xs font-extrabold text-white">კურიერთან გადახდა</span>
+              </div>
+              <span class="text-[10px] text-emerald-400 font-bold bg-emerald-500/10 px-2 py-0.5 rounded border border-emerald-500/20">ადგილზე</span>
+            </label>
+
+          </div>
+        </fieldset>
+
+        <button 
+          type="button"
+          (click)="onCheckout()"
+          [disabled]="isLoading()"
+          class="w-full bg-gradient-to-r from-[#70001a] via-[#850020] to-[#990025] hover:brightness-110 text-white py-4 rounded-2xl font-black text-sm transition-all duration-300 shadow-lg shadow-[#70001a]/30 active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed disabled:shadow-none flex items-center justify-center gap-2 mt-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500 border border-amber-500/20">
+          
+          @if (isLoading()) {
+            <svg class="animate-spin h-5 w-5 text-white" fill="none" viewBox="0 0 24 24" aria-hidden="true">
+              <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+              <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+            </svg>
+            <span>მუშავდება შეკვეთა...</span>
+          } @else {
+            <span>შეკვეთის გაფორმება</span>
+            <svg class="w-4 h-4 text-amber-400" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"/></svg>
+          }
+        </button>
+      </aside>
+
+    </div>
+  }
+</div>
