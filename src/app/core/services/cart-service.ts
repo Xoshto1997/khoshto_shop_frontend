@@ -14,7 +14,7 @@ export class CartService {
   public readonly cartItemsCount = computed(() => {
     const currentCart = this.cart();
     if (!currentCart?.items) return 0;
-    return currentCart.items.length;
+    return currentCart.items.reduce((sum, item) => sum + item.quantity, 0);
   });
 
   public readonly cartTotalPrice = computed(() => {
