@@ -31,8 +31,10 @@ export class Cart implements OnInit {
   }
 
   public increaseQuantity(productId: number, currentQty: number): void {
-    this.cartService.updateQuantity(productId, currentQty + 1);
-  }
+  this.cartService.updateQuantity(productId, currentQty + 1).subscribe({
+    error: (err) => console.error('რაოდენობის გაზრდა ჩავარდა:', err)
+  });
+}
 
   public decreaseQuantity(productId: number, currentQty: number): void {
     if (currentQty > 1) {
