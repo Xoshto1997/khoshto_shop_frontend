@@ -43,10 +43,10 @@ export class Cart implements OnInit {
   }
 
   public removeItem(productId: number): void {
-    if (confirm('ნამდვილად გსურთ პროდუქტის კალათიდან წაშლა?')) {
-      this.cartService.removeFromCart(productId);
-    }
-  }
+  this.cartService.removeFromCart(productId).subscribe({
+    error: (err) => console.error('წაშლა ჩავარდა:', err)
+  });
+}
 
   public async onCheckout(): Promise<void> {
     const email = this.authService.currentUserEmail() as string | null;
