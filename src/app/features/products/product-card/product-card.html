@@ -39,25 +39,26 @@
       </span>
     </div>
     
-    <p class="text-zinc-400 text-xs leading-relaxed line-clamp-2 mb-5 px-0.5">
+    <p class="text-zinc-400 text-xs leading-relaxed line-clamp-2 mb-5 px-0.5 min-h-[2rem]">
       {{ product().description }}
     </p>
   </div>
   
-  <div class="flex items-center gap-2 mt-auto pt-4 border-t border-zinc-800/80">
-    <button (click)="$event.stopPropagation(); productService.deleteProduct(product().id!)" 
-            class="bg-rose-500/10 hover:bg-rose-500/20 text-rose-400 p-3 rounded-xl transition-all duration-200 active:scale-90 flex items-center justify-center border border-rose-500/20 hover:border-rose-500/40"
-            title="პროდუქტის წაშლა">
-      <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
-      </svg>
+  <div class="flex items-center gap-2.5 mt-auto pt-4 border-t border-zinc-800/80">
+    <button
+      (click)="$event.stopPropagation()"
+      class="px-3.5 py-2.5 bg-zinc-800/60 hover:bg-rose-500/10 text-zinc-300 hover:text-rose-400 text-xs font-semibold rounded-xl transition-all duration-200 active:scale-95 flex items-center justify-center border border-zinc-700/50 hover:border-rose-500/30 whitespace-nowrap"
+      title="პროდუქტის დეტალები">
+      დეტალები
     </button>
     
-    <button class="flex-1 bg-gradient-to-r from-rose-800 to-rose-900 hover:from-rose-700 hover:to-rose-800 text-white text-xs font-black py-3.5 rounded-xl transition-all duration-300 active:scale-[0.98] shadow-lg shadow-rose-950/50 flex items-center justify-center gap-1.5 border border-rose-700/40">
-      <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+    <button 
+      (click)="$event.stopPropagation()"
+      class="flex-1 bg-gradient-to-r from-rose-800 to-rose-900 hover:from-rose-700 hover:to-rose-800 text-white text-xs font-bold py-2.5 px-3 rounded-xl transition-all duration-300 active:scale-[0.98] shadow-lg shadow-rose-950/40 flex items-center justify-center gap-1.5 border border-rose-700/40 whitespace-nowrap">
+      <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
         <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"/>
       </svg>
-      <span>კალათაში დამატება</span>
+      <span>დამატება</span>
     </button>
   </div>
 </div>

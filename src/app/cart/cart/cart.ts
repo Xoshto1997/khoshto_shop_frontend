@@ -31,22 +31,26 @@ export class Cart implements OnInit {
   }
 
   public increaseQuantity(productId: number, currentQty: number): void {
-    this.cartService.updateQuantity(productId, currentQty + 1);
-  }
+  this.cartService.updateQuantity(productId, currentQty + 1).subscribe({
+    error: (err) => console.error('რაოდენობის გაზრდა ჩავარდა:', err)
+  });
+}
 
   public decreaseQuantity(productId: number, currentQty: number): void {
     if (currentQty > 1) {
-      this.cartService.updateQuantity(productId, currentQty - 1);
+      this.cartService.updateQuantity(productId, currentQty - 1).subscribe({
+    error: (err) => console.error('რაოდენობის შემცირება ჩავარდა:', err)
+    });
     } else {
       this.removeItem(productId);
     }
   }
 
   public removeItem(productId: number): void {
-    if (confirm('ნამდვილად გსურთ პროდუქტის კალათიდან წაშლა?')) {
-      this.cartService.removeFromCart(productId);
-    }
-  }
+  this.cartService.removeFromCart(productId).subscribe({
+    error: (err) => console.error('წაშლა ჩავარდა:', err)
+  });
+}
 
   public async onCheckout(): Promise<void> {
     const email = this.authService.currentUserEmail() as string | null;
