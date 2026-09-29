@@ -1,4 +1,4 @@
 export const environment = {
   production: false,
-  apiUrl: 'https://khoshto-api.duckdns.org/api'
+  apiUrl: 'https://3dstudio.ge/api'
 };
