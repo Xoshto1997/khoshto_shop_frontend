@@ -1,9 +1,11 @@
-import { Component, inject, input } from '@angular/core';
+import { Component, inject, input, DestroyRef } from '@angular/core';
 import {ProductService } from '../../../core/services/product';
 
 import { RouterLink } from '@angular/router';
 import { Product } from '../../../models/product.model';
 import { CurrencyService } from '../../../core/services/currency-service';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { CartService } from '../../../core/services/cart-service';
 
 @Component({
   selector: 'app-product-card',
@@ -15,5 +17,28 @@ export class ProductCard {
   public readonly product = input.required<Product>();
   public readonly productService = inject(ProductService);
   public readonly currencyService = inject(CurrencyService);
+  private readonly cartService = inject(CartService);
+  private readonly destroyRef = inject(DestroyRef);
+
+  public addToCart(): void {
+    const currentProduct = this.product();
+
+    if (currentProduct && currentProduct.id !== undefined) {
+      this.cartService
+        .addToCart(currentProduct.id, 1)
+        .pipe(takeUntilDestroyed(this.destroyRef))
+        .subscribe({
+          next: (): void => {
+            alert('პროდუქტი წარმატებით დაემატა კალათაში!');
+          },
+          error: (err): void => {
+            console.error('კალათაში დამატება ჩავარდა:', err);
+            alert('გთხოვთ ჯერ გაიაროთ ავტორიზაცია!');
+          },
+        });
+    } else {
+      alert('პროდუქტის იდენტიფიკატორი არასწორია.');
+    }
+  }
 }
     

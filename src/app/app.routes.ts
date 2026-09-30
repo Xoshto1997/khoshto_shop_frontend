@@ -1,37 +1,34 @@
 import { Routes } from '@angular/router';
 import { authGuard } from './core/guards/auth-guard';
-import { guestGuard } from './core/guards/guest-guard-guard'; // 👈 დააიმპორტე guestGuard
+import { guestGuard } from './core/guards/guest-guard-guard'; 
 import { adminGuard } from './core/guards/admin-guard-guard';
 import { ProductListComponent } from './features/products/product-list/product-list';
 
 export const routes: Routes = [
   { path: '', component: ProductListComponent },
 
-  // 🔓 სტუმრების გვერდები (გამოიყენე guestGuard)
   {
     path: 'login',
     loadComponent: () => import('./features/auth/login/login').then((c) => c.LoginComponent),
-    canActivate: [guestGuard], // 👈 შეცვალე guestGuard-ით
+    canActivate: [guestGuard], 
   },
   {
     path: 'register',
     loadComponent: () => import('./features/auth/register/register').then((c) => c.Register),
-    canActivate: [guestGuard], // 👈 შეცვალე guestGuard-ით
+    canActivate: [guestGuard], 
   },
 
-  // 🔒 იუზერის დაცული გვერდები (გამოიყენე სწორი authGuard)
   {
     path: 'profile',
     loadComponent: () => import('./components/profile/profile').then((m) => m.Profile),
-    canActivate: [authGuard] // 👈 ახლა უკვე ნამდვილი authGuard დაიცავს!
+    canActivate: [authGuard] 
   },
   {
     path: 'my-orders',
     loadComponent: () => import('./user/user-orders/user-orders').then((c) => c.UserOrdersComponent),
-    canActivate: [authGuard] // 👈 აქვე დაადე, რომ შეკვეთებიც დაცული იყოს!
+    canActivate: [authGuard] 
   },
 
-  // 🛡️ ადმინის გვერდები (adminGuard)
   {
     path: 'add-product',
     loadComponent: () => import('./features/products/product-form/product-form').then((c) => c.ProductFormComponent),
@@ -48,7 +45,6 @@ export const routes: Routes = [
     canActivate: [adminGuard],
   },
 
-  // საჯარო გვერდები
   { path: 'product/:id', loadComponent: () => import('./features/products/productdetails/productdetails').then((c) => c.ProductDetails) },
   { path: 'cart', loadComponent: () => import('./cart/cart/cart').then((c) => c.Cart) },
   { path: 'forgot-password', loadComponent: () => import('./features/auth/forgot-password/forgot-password').then((c) => c.ForgotPassword) },

@@ -1,137 +1,208 @@
-<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 animate-fadeIn text-zinc-100 relative">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 animate-fadeIn text-zinc-100 relative">
   
-  <div class="relative overflow-hidden bg-zinc-900/95 rounded-[40px] mb-20 shadow-2xl border border-zinc-800 backdrop-blur-xl flex items-center justify-between">
+  <!-- HERO BANNER (ზუსტად სურათის მიხედვით) -->
+  <div class="relative overflow-hidden rounded-[32px] sm:rounded-[40px] mb-12 sm:mb-16 shadow-2xl border border-amber-900/50 flex items-center min-h-[480px] sm:min-h-[520px] bg-black/90">
     
-    <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1607082348824-0a96f2a4b9da?q=80&w=2070')] bg-cover bg-center opacity-[0.05] mix-blend-overlay"></div>
+    <!-- ფონის ფოტო მანქანის სალონით -->
+    <div class="absolute inset-0 bg-[url('/3dstudio-back.jpg')] bg-cover bg-center opacity-85"></div>
     
-    <div class="absolute -top-24 -right-24 w-96 h-96 bg-rose-900/20 rounded-full blur-3xl pointer-events-none"></div>
-    <div class="absolute -bottom-24 -left-24 w-96 h-96 bg-rose-950/30 rounded-full blur-3xl pointer-events-none"></div>
+    <!-- ბუნებრივი მუქი გრადიენტი მარცხნიდან მარჯვნივ ტექსტის უკეთესი კითხვადობისთვის -->
+    <div class="absolute inset-0 bg-gradient-to-r from-black/95 via-black/80 to-transparent"></div>
     
-    <div class="relative max-w-2xl py-16 sm:py-20 px-8 sm:px-16 flex flex-col items-start z-10">
-      <span class="bg-rose-950/60 text-rose-300 text-[10px] font-black px-3 py-1 rounded-xl uppercase tracking-widest mb-5 border border-rose-800/40 backdrop-blur-md">
-        3DSTUDIO Special
-      </span>
-      <h1 class="text-4xl sm:text-5xl font-black text-white mb-5 leading-[1.15] tracking-tight">
-        აღმოაჩინე უახლესი <br>
-        <span class="bg-gradient-to-r from-rose-400 via-rose-200 to-rose-500 bg-clip-text text-transparent">3D &amp; ციფრული ტენდენციები</span>
+    <!-- რბილი ოქროსფერი განათება მარცხენა კუთხეში -->
+    <div class="absolute -top-20 -left-20 w-96 h-96 bg-amber-600/15 rounded-full blur-3xl pointer-events-none"></div>
+
+    <!-- Hero Content -->
+    <div class="relative max-w-xl py-12 sm:py-16 px-6 sm:px-14 flex flex-col items-start z-10">
+      
+      <!-- ლოგო / ბრენდის სახელი -->
+      <div class="flex items-center gap-2 mb-6">
+        <span class="text-3xl font-black tracking-tighter text-white font-mono">3D</span>
+        <span class="text-[10px] tracking-[0.2em] font-extrabold text-amber-200/80 uppercase border-l border-amber-500/40 pl-2 leading-tight">STUDIO</span>
+      </div>
+      
+      <!-- სათაური -->
+      <h1 class="text-3xl sm:text-5xl font-black text-white mb-5 leading-[1.15] tracking-tight">
+        ქართული ხასიათი <br>
+        <span class="text-amber-100">თქვენს მანქანაში</span>
       </h1>
-      <p class="text-zinc-200 text-sm sm:text-base mb-8 max-w-md font-medium leading-relaxed">
-        საუკეთესო 3D მოდელები, აქსესუარები და ტექნიკა გარანტიით. იშოპინგე მარტივად, სწრაფად და სრულიად დაცულად.
+      
+      <!-- აღწერა -->
+      <p class="text-amber-100/70 text-xs sm:text-sm mb-8 max-w-md font-normal leading-relaxed italic">
+        ჩოხა და კაბა - ქართული კულტურით შთაგონებული მანქანის არომატიზატორები. შექმნილი მათთვის, ვისაც ქართული დეტალები განუყოფლად უყვარს.
       </p>
-      <button class="bg-gradient-to-r from-rose-800 to-rose-900 hover:from-rose-700 hover:to-rose-800 text-white px-8 py-3.5 rounded-2xl font-black text-sm transition-all duration-300 shadow-lg shadow-rose-950/50 border border-rose-700/40 active:scale-[0.98] cursor-pointer">
-        დაიწყე დათვალიერება
+      
+      <!-- ოქროსფერი ღილაკი -->
+      <button 
+        type="button"
+        class="bg-gradient-to-r from-[#d4a359] via-[#b8860b] to-[#966f13] hover:brightness-110 text-zinc-950 px-7 py-3.5 rounded-xl font-bold text-xs sm:text-sm transition-all duration-300 shadow-lg shadow-amber-950/60 border border-amber-300/40 active:scale-95 cursor-pointer flex items-center gap-2 group">
+        <span>შეარჩიე შენი არომატიზატორი</span>
+        <svg class="w-4 h-4 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5"/>
+        </svg>
       </button>
     </div>
 
-    <div class="absolute right-0 bottom-0 top-0 w-full lg:w-1/2 flex items-center justify-end pointer-events-none select-none z-0 overflow-hidden pr-4 lg:pr-12">
-      <img 
-        src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQj9Ui4j-6uQFPib5X7aGC2D8Tk_Oc966ItOQtl7um3oeCiqQ5XkPl9CA1d&s=10" 
-        alt="Georgian Dance Silhouette" 
-        class="h-[85%] lg:h-[95%] w-auto object-contain opacity-40 sm:opacity-50 mix-blend-screen filter drop-shadow-[0_0_20px_rgba(159,18,57,0.35)] transition-all duration-500"
-      />
-    </div>
+
 
   </div>
 
-  <div class="flex items-center justify-between mb-12 border-b border-zinc-800 pb-6">
-    <div>
-      <div class="flex items-center gap-3">
-        <h2 class="text-2xl sm:text-3xl font-black text-white tracking-tight">ჩვენი პროდუქცია</h2>
-        <div class="w-2.5 h-2.5 bg-rose-500 rounded-full animate-ping"></div>
-      </div>
-      <p class="text-zinc-500 text-xs sm:text-sm mt-1.5 font-medium">საუკეთესო შემოთავაზებები პირდაპირ 3D სტუდიიდან</p>
-    </div>
-  </div>
-
-  <div class="grid grid-cols-1 items-start">
-    <div class="w-full">
-      @if (products().length === 0) {
-        <div class="text-center py-24 bg-zinc-900/80 backdrop-blur-md rounded-[32px] border border-zinc-800 shadow-xl flex flex-col items-center justify-center p-8 max-w-xl mx-auto">
-          <div class="w-16 h-16 bg-zinc-950 border border-zinc-800 rounded-2xl flex items-center justify-center text-rose-400 mb-5 shadow-inner">
-            <svg class="w-8 h-8" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M20.25 7.5l-.625 10.632a2.25 2.25 0 01-2.247 2.118H6.622a2.25 2.25 0 01-2.247-2.118L3.75 7.5M10 11.25h4M3.375 7.5h17.25c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125z"/>
-            </svg>
-          </div>
-          <h3 class="text-xl font-bold text-white mb-2">საწყობი ცარიელია</h3>
-          <p class="text-zinc-300 font-medium text-sm leading-relaxed max-w-sm">
-            პროდუქტების მოძიება ვერ მოხერხდა
-          </p>
-        </div>
-      } @else {
-        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-          @for (prod of products(); track prod.id) {
-            <app-product-card [product]="prod" class="block"></app-product-card>
-          }
-        </div>
-      }
-    </div>
-  </div>
-
-  <div class="mt-28 p-6 sm:p-8 md:p-10 bg-zinc-900/60 backdrop-blur-xl rounded-[32px] border border-zinc-800/80 shadow-2xl relative overflow-hidden">
-
-    <div class="absolute -top-12 -left-12 w-48 h-48 bg-rose-900/20 rounded-full blur-3xl pointer-events-none"></div>
-    <div class="absolute -bottom-12 -right-12 w-48 h-48 bg-rose-950/30 rounded-full blur-3xl pointer-events-none"></div>
-
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 relative z-10">
+  <!-- FEATURES BAR (ზუსტად სურათის ქვედა ზოლი მრგვალი აიკონებით) -->
+  <div class="mb-20 p-4 sm:p-6 bg-[#0a0803]/90 backdrop-blur-md rounded-2xl border border-amber-900/50 shadow-2xl">
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
       
-      <div class="flex items-start gap-4 p-5 rounded-2xl bg-zinc-950/50 hover:bg-zinc-950 border border-zinc-800/60 hover:border-rose-900/50 transition-all duration-300 group/feat shadow-sm">
-        <div class="w-12 h-12 bg-rose-950/50 border border-rose-800/40 rounded-xl flex items-center justify-center shrink-0 text-rose-400 shadow-inner group-hover/feat:bg-rose-800 group-hover/feat:text-white transition-all duration-300">
-          <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75z"/>
+      <!-- Feature 1 -->
+      <div class="flex items-center gap-3.5 p-2 rounded-xl transition-all duration-300 hover:bg-amber-950/20 group">
+        <div class="w-12 h-12 rounded-full border border-amber-500/50 flex items-center justify-center shrink-0 text-amber-400 group-hover:border-amber-400 group-hover:bg-amber-500/10 transition-all">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 21a9 9 0 100-18 9 9 0 000 18zM12 8v4l2.5 2.5"/>
           </svg>
         </div>
         <div>
-          <h4 class="font-bold text-white text-base">სწრაფი მიწოდება</h4>
-          <p class="text-zinc-300 text-xs sm:text-sm mt-1.5 leading-relaxed">უფასო საკურიერო მომსახურება მთელი ქვეყნის მასშტაბით 24 საათში.</p>
+          <h4 class="font-bold text-white text-xs sm:text-sm tracking-wide">ხარისხიანი არომატი</h4>
+          <p class="text-amber-200/60 text-[11px] sm:text-xs mt-0.5">ხანგრძლივი სურნელი</p>
         </div>
       </div>
 
-      <div class="flex items-start gap-4 p-5 rounded-2xl bg-zinc-950/50 hover:bg-zinc-950 border border-zinc-800/60 hover:border-rose-900/50 transition-all duration-300 group/feat shadow-sm">
-        <div class="w-12 h-12 bg-rose-950/50 border border-rose-800/40 rounded-xl flex items-center justify-center shrink-0 text-rose-400 shadow-inner group-hover/feat:bg-rose-800 group-hover/feat:text-white transition-all duration-300">
-          <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+      <!-- Feature 2 -->
+      <div class="flex items-center gap-3.5 p-2 rounded-xl transition-all duration-300 hover:bg-amber-950/20 group">
+        <div class="w-12 h-12 rounded-full border border-amber-500/50 flex items-center justify-center shrink-0 text-amber-400 group-hover:border-amber-400 group-hover:bg-amber-500/10 transition-all">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.286z"/>
           </svg>
         </div>
         <div>
-          <h4 class="font-bold text-white text-base">უსაფრთხო გადახდა</h4>
-          <p class="text-zinc-300 text-xs sm:text-sm mt-1.5 leading-relaxed">ყველა ტრანზაქცია დაცულია და შიფრულია უახლესი SSL სტანდარტებით.</p>
+          <h4 class="font-bold text-white text-xs sm:text-sm tracking-wide">მაღალი ხარისხი</h4>
+          <p class="text-amber-200/60 text-[11px] sm:text-xs mt-0.5">პრემიუმ მასალები</p>
         </div>
       </div>
 
-      <div class="flex items-start gap-4 p-5 rounded-2xl bg-zinc-950/50 hover:bg-zinc-950 border border-zinc-800/60 hover:border-rose-900/50 transition-all duration-300 group/feat shadow-sm">
-        <div class="w-12 h-12 bg-rose-950/50 border border-rose-800/40 rounded-xl flex items-center justify-center shrink-0 text-rose-400 shadow-inner group-hover/feat:bg-rose-800 group-hover/feat:text-white transition-all duration-300">
-          <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 12c0-1.232-.046-2.453-.138-3.662a4.006 4.006 0 00-3.7-3.7 48.656 48.656 0 00-7.324 0 4.006 4.006 0 00-3.7 3.7C4.646 9.547 4.6 10.768 4.6 12c0 1.232.046 2.453.138 3.662a4.006 4.006 0 003.7 3.7 48.656 48.656 0 007.324 0 4.006 4.006 0 003.7-3.7c.092-1.209.138-2.43.138-3.662z"/>
-            <path stroke-linecap="round" stroke-linejoin="round" d="M9 10.5l3 3 3-3"/>
+      <!-- Feature 3 -->
+      <div class="flex items-center gap-3.5 p-2 rounded-xl transition-all duration-300 hover:bg-amber-950/20 group">
+        <div class="w-12 h-12 rounded-full border border-amber-500/50 flex items-center justify-center shrink-0 text-amber-400 group-hover:border-amber-400 group-hover:bg-amber-500/10 transition-all">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M7 11.5V14m0-2.5v-6a1.5 1.5 0 113 0m-3 6a1.5 1.5 0 00-3 0v2a7.5 7.5 0 0015 0v-5a1.5 1.5 0 00-3 0m-6-3V11m0-5.5a1.5 1.5 0 113 0m-3 0V11m3-5.5a1.5 1.5 0 113 0"/>
           </svg>
         </div>
         <div>
-          <h4 class="font-bold text-white text-base">ხარისხი</h4>
-          <p class="text-zinc-300 text-xs sm:text-sm mt-1.5 leading-relaxed">ჩვენი პროდუქტები მიღებულია უმაღლესი ხარისხის მიხედვით და უზრუნველყოფილია ყველა კონკრეტული მოთხოვნის შესაძლებლობით.</p>
+          <h4 class="font-bold text-white text-xs sm:text-sm tracking-wide">ხელნაკეთი დეტალები</h4>
+          <p class="text-amber-200/60 text-[11px] sm:text-xs mt-0.5">ყურადღება თითოეულ ნიუანსს</p>
         </div>
       </div>
 
-      <div class="flex items-start gap-4 p-5 rounded-2xl bg-zinc-950/50 hover:bg-zinc-950 border border-zinc-800/60 hover:border-rose-900/50 transition-all duration-300 group/feat shadow-sm">
-        <div class="w-12 h-12 bg-rose-950/50 border border-rose-800/40 rounded-xl flex items-center justify-center shrink-0 text-rose-400 shadow-inner group-hover/feat:bg-rose-800 group-hover/feat:text-white transition-all duration-300">
-          <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M20.25 8.511c.083.294.13.602.13.922 0 1.916-1.665 3.47-3.72 3.471.411.393.834.805 1.189 1.258l2.122 2.71c.217.277.02.684-.333.684h-10.3c-.383 0-.743-.153-1.011-.424l-3.32-3.354a3.684 3.684 0 01-.692-1.236A3.75 3.75 0 013.75 9.433c0-2.079 1.94-3.765 4.333-3.765h6.634c1.6 0 2.977.747 3.553 1.815z"/>
+      <!-- Feature 4 -->
+      <div class="flex items-center gap-3.5 p-2 rounded-xl transition-all duration-300 hover:bg-amber-950/20 group">
+        <div class="w-12 h-12 rounded-full border border-amber-500/50 flex items-center justify-center shrink-0 text-amber-400 group-hover:border-amber-400 group-hover:bg-amber-500/10 transition-all">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M21 11.25v8.25a1.5 1.5 0 01-1.5 1.5H4.5a1.5 1.5 0 01-1.5-1.5v-8.25M12 4.875A2.625 2.625 0 109.375 7.5H12m0-2.625A2.625 2.625 0 1114.625 7.5H12m0 0V21"/>
           </svg>
         </div>
         <div>
-          <h4 class="font-bold text-white text-base">24/7 მხარდაჭერა</h4>
-          <p class="text-zinc-300 text-xs sm:text-sm mt-1.5 leading-relaxed">ჩვენი გუნდი ნებისმიერ დროს მზადაა გაგიწიოთ სასურველი კონსულტაცია.</p>
+          <h4 class="font-bold text-white text-xs sm:text-sm tracking-wide">იდეალური საჩუქარი</h4>
+          <p class="text-amber-200/60 text-[11px] sm:text-xs mt-0.5">პატარა, დახვეწილი სიურპრიზი</p>
         </div>
       </div>
 
     </div>
   </div>
 
+  <!-- SECTION TITLE (პროდუქცია) -->
+  <div class="flex items-center justify-between mb-8 border-b border-amber-900/50 pb-5">
+    <div class="flex items-center gap-3">
+      <span class="w-2.5 h-2.5 bg-amber-400 rounded-full animate-ping"></span>
+      <h2 class="text-2xl sm:text-3xl font-black text-white tracking-tight">ჩვენი პროდუქცია</h2>
+    </div>
+    <p class="text-amber-200/60 text-xs sm:text-sm font-medium">ექსკლუზიური 3D ნაკეთობები</p>
+  </div>
+
+  <!-- PRODUCT GRID -->
+  <div class="w-full">
+    @if (products().length === 0) {
+      <div class="text-center py-20 bg-zinc-950/80 backdrop-blur-md rounded-3xl border border-amber-900/40 shadow-xl flex flex-col items-center justify-center p-8 max-w-xl mx-auto">
+        <div class="w-16 h-16 bg-[#0a0803] border border-amber-900/60 rounded-2xl flex items-center justify-center text-amber-400 mb-4 shadow-inner">
+          <svg class="w-8 h-8" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M20.25 7.5l-.625 10.632a2.25 2.25 0 01-2.247 2.118H6.622a2.25 2.25 0 01-2.247-2.118L3.75 7.5M10 11.25h4M3.375 7.5h17.25c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125z"/>
+          </svg>
+        </div>
+        <h3 class="text-lg font-bold text-white mb-1">საწყობი ცარიელია</h3>
+        <p class="text-amber-200/60 font-medium text-xs sm:text-sm leading-relaxed max-w-sm">
+          პროდუქტების მოძიება დროებით ვერ მოხერხდა
+        </p>
+      </div>
+    } @else {
+      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+        @for (prod of products(); track prod.id) {
+          <app-product-card [product]="prod" class="block hover:-translate-y-1 transition-transform duration-300"></app-product-card>
+        }
+      </div>
+    }
+  </div>
+
+  <div class="bg-zinc-950/60 backdrop-blur-xl p-6 sm:p-8 md:p-10 mt-[50px] rounded-[32px] border border-amber-900/50 shadow-xl">
+    <div class="flex items-center gap-3 mb-8">
+      <div class="p-2.5 text-amber-400 rounded-2xl border border-amber-800/40 text-amber-400">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M9.879 7.519c1.171-1.025 3.071-1.025 4.242 0 1.172 1.025 1.172 2.687 0 3.712-.203.179-.43.326-.67.442-.745.361-1.45.999-1.45 1.827v.75M12 18h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+        </svg>
+      </div>
+      <div>
+        <h2 class="text-xl sm:text-2xl font-black text-white tracking-tight">ხშირად დასმული შეკითხვები</h2>
+        <p class="text-xs font-medium text-amber-200/60 mt-0.5">პასუხები ყველაზე გავრცელებულ კითხვებზე</p>
+      </div>
+    </div>
+
+    <div class="space-y-4 mt-[50px]">
+      <details class="group bg-black/60 rounded-2xl border border-amber-900/50 overflow-hidden transition-all duration-200 [&[open]]:border-amber-700/60">
+        <summary class="flex justify-between items-center p-5 cursor-pointer font-bold text-sm text-zinc-200 hover:text-amber-400 transition-colors list-none select-none">
+          <span>როგორ მივიღებ შეძენილ 3D მოდელს?</span>
+          <span class="transform group-open:rotate-180 transition-transform duration-300 text-amber-200/50 group-open:text-amber-400 ml-4">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5"/>
+            </svg>
+          </span>
+        </summary>
+        <div class="px-5 pb-5 text-sm text-amber-100/70 leading-relaxed font-medium border-t border-amber-900/20 pt-3">
+          გადახდის მეთოდის არჩევის თანავე, ჩვენი წარმომადგენელი დაგიკავშირდებათ და გაგაცნობთ ნივთის მიწოდების შესახებ ინფორმაციას.
+        </div>
+      </details>
+
+      <details class="group bg-black/60 rounded-2xl border border-amber-900/50 overflow-hidden transition-all duration-200 [&[open]]:border-amber-700/60">
+        <summary class="flex justify-between items-center p-5 cursor-pointer font-bold text-sm text-zinc-200 hover:text-amber-400 transition-colors list-none select-none">
+          <span>რა ფორმატშია წარმოდგენილი ფაილები?</span>
+          <span class="transform group-open:rotate-180 transition-transform duration-300 text-amber-200/50 group-open:text-amber-400 ml-4">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5"/>
+            </svg>
+          </span>
+        </summary>
+        <div class="px-5 pb-5 text-sm text-amber-100/70 leading-relaxed font-medium border-t border-amber-900/20 pt-3">
+          მოდელების უმეტესობა ხელმისაწვდომია პოპულარულ 3D ფორმატებში. კონკრეტული ფორმატები მითითებულია პროდუქტის აღწერაში.
+        </div>
+      </details>
+
+      <details class="group bg-black/60 rounded-2xl border border-amber-900/50 overflow-hidden transition-all duration-200 [&[open]]:border-amber-700/60">
+        <summary class="flex justify-between items-center p-5 cursor-pointer font-bold text-sm text-zinc-200 hover:text-amber-400 transition-colors list-none select-none">
+          <span>შეიძლება თუ არა მოდელის გამოყენება კომერციული პროექტებისთვის?</span>
+          <span class="transform group-open:rotate-180 transition-transform duration-300 text-amber-200/50 group-open:text-amber-400 ml-4">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5"/>
+            </svg>
+          </span>
+        </summary>
+        <div class="px-5 pb-5 text-sm text-amber-100/70 leading-relaxed font-medium border-t border-amber-900/20 pt-3">
+          დიახ, შეძენილი მოდელების გამოყენება შეგიძლიათ როგორც პირად, ასევე კომერციულ პროექტებში (თამაშები, რენდერები, ანიმაციები), თუმცა აკრძალულია ფაილის პირდაპირი გადაყიდვა ან გავრცელება.
+        </div>
+      </details>
+    </div>
+  </div>
+
+  <!-- FLOATING MESSENGER BUTTON -->
   <a
     href="https://m.me/3dstudiogeorgia"
     target="_blank"
     rel="noopener noreferrer"
     title="მოგვწერეთ Facebook-ზე"
-    class="fixed bottom-6 right-6 z-50 flex items-center justify-center w-14 h-14 bg-gradient-to-tr from-[#006AFF] to-[#00B2FF] text-white rounded-full shadow-xl shadow-blue-500/30 hover:shadow-blue-500/50 hover:scale-110 active:scale-95 transition-all duration-300 group"
+    class="fixed bottom-6 right-6 z-50 flex items-center justify-center w-14 h-14 bg-gradient-to-tr from-[#006AFF] to-[#00B2FF] text-white rounded-full shadow-2xl shadow-blue-500/40 hover:scale-110 active:scale-95 transition-all duration-300 group"
   >
     <svg class="w-7 h-7 fill-current transform group-hover:rotate-6 transition-transform duration-300" viewBox="0 0 24 24">
       <path d="M12 2C6.477 2 2 6.145 2 11.258c0 2.909 1.458 5.513 3.743 7.195V22l3.385-1.858c.905.251 1.868.388 2.872.388 5.523 0 10-4.145 10-9.258C22 6.145 17.523 2 12 2zm1.092 12.383l-2.583-2.753-5.042 2.753 5.545-5.888 2.646 2.753 4.979-2.753-5.545 5.888z"/>

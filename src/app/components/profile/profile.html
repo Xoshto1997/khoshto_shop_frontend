@@ -1,19 +1,19 @@
-<div class="max-w-xl mx-auto p-6 bg-[#1A0F24] border border-[#3D1A45] rounded-2xl shadow-xl text-purple-100 mt-8">
+<div class="max-w-xl mx-auto p-6 bg-zinc-950/90 border border-amber-900/40 rounded-2xl shadow-xl text-amber-100 mt-8 backdrop-blur-xl">
   <h2 class="text-xl font-bold text-white mb-6 flex items-center gap-2">
-    <span class="w-3 h-3 rounded-full bg-[#E08A4E]"></span>
+    <span class="w-3 h-3 rounded-full bg-amber-500 shadow-sm shadow-amber-500/50"></span>
     პაროლის შეცვლა
   </h2>
 
   <!-- წარმატების შეტყობინება -->
   @if (successMessage()) {
-    <div class="mb-4 p-3 bg-emerald-950/60 border border-emerald-500/40 text-emerald-300 rounded-xl text-xs font-bold">
+    <div class="mb-4 p-3 bg-emerald-950/60 border border-emerald-500/40 text-emerald-300 rounded-xl text-xs font-bold animate-fadeIn">
       {{ successMessage() }}
     </div>
   }
 
   <!-- შეცდომის შეტყობინება -->
   @if (errorMessage()) {
-    <div class="mb-4 p-3 bg-rose-950/60 border border-rose-500/40 text-rose-300 rounded-xl text-xs font-bold">
+    <div class="mb-4 p-3 bg-amber-950/60 border border-amber-500/40 text-amber-300 rounded-xl text-xs font-bold animate-fadeIn">
       {{ errorMessage() }}
     </div>
   }
@@ -22,19 +22,19 @@
     
     <!-- 1. მიმდინარე პაროლი -->
     <div>
-      <label class="block text-xs font-bold text-purple-200 mb-1.5">მიმდინარე პაროლი *</label>
+      <label class="block text-xs font-bold text-amber-200/80 mb-1.5">მიმდინარე პაროლი *</label>
       <div class="relative">
         <input 
           [type]="showCurrentPassword() ? 'text' : 'password'" 
           [(ngModel)]="passwordData.currentPassword" 
           name="currentPassword"
           placeholder="••••••••"
-          class="w-full bg-[#0D0712] border border-[#3D1A45] rounded-xl pl-3.5 pr-10 py-2.5 text-xs text-white focus:outline-none focus:border-[#C86D2A] transition-all" />
+          class="w-full bg-[#0a0803] border border-amber-900/50 rounded-xl pl-3.5 pr-10 py-2.5 text-xs text-white placeholder-amber-300/30 focus:outline-none focus:border-amber-500 focus:ring-1 focus:ring-amber-500 transition-all" />
         
         <button 
           type="button" 
           (click)="showCurrentPassword.set(!showCurrentPassword())"
-          class="absolute right-3 top-1/2 -translate-y-1/2 text-purple-400 hover:text-white transition-colors cursor-pointer">
+          class="absolute right-3 top-1/2 -translate-y-1/2 text-amber-400/70 hover:text-amber-300 transition-colors cursor-pointer">
           @if (showCurrentPassword()) {
             <!-- თვალი დახუჭული (Hide) -->
             <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -53,19 +53,19 @@
 
     <!-- 2. ახალი პაროლი -->
     <div>
-      <label class="block text-xs font-bold text-purple-200 mb-1.5">ახალი პაროლი *</label>
+      <label class="block text-xs font-bold text-amber-200/80 mb-1.5">ახალი პაროლი *</label>
       <div class="relative">
         <input 
           [type]="showNewPassword() ? 'text' : 'password'" 
           [(ngModel)]="passwordData.newPassword" 
           name="newPassword"
           placeholder="მინიმუმ 6 სიმბოლო"
-          class="w-full bg-[#0D0712] border border-[#3D1A45] rounded-xl pl-3.5 pr-10 py-2.5 text-xs text-white focus:outline-none focus:border-[#C86D2A] transition-all" />
+          class="w-full bg-[#0a0803] border border-amber-900/50 rounded-xl pl-3.5 pr-10 py-2.5 text-xs text-white placeholder-amber-300/30 focus:outline-none focus:border-amber-500 focus:ring-1 focus:ring-amber-500 transition-all" />
         
         <button 
           type="button" 
           (click)="showNewPassword.set(!showNewPassword())"
-          class="absolute right-3 top-1/2 -translate-y-1/2 text-purple-400 hover:text-white transition-colors cursor-pointer">
+          class="absolute right-3 top-1/2 -translate-y-1/2 text-amber-400/70 hover:text-amber-300 transition-colors cursor-pointer">
           @if (showNewPassword()) {
             <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858-5.908a8.98 8.98 0 012.122-.363c4.478 0 8.268 2.943 9.542 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21f-9-9" />
@@ -82,19 +82,19 @@
 
     <!-- 3. ახალი პაროლის დადასტურება -->
     <div>
-      <label class="block text-xs font-bold text-purple-200 mb-1.5">გაიმეორეთ ახალი პაროლი *</label>
+      <label class="block text-xs font-bold text-amber-200/80 mb-1.5">გაიმეორეთ ახალი პაროლი *</label>
       <div class="relative">
         <input 
           [type]="showConfirmPassword() ? 'text' : 'password'" 
           [(ngModel)]="passwordData.confirmPassword" 
           name="confirmPassword"
           placeholder="••••••••"
-          class="w-full bg-[#0D0712] border border-[#3D1A45] rounded-xl pl-3.5 pr-10 py-2.5 text-xs text-white focus:outline-none focus:border-[#C86D2A] transition-all" />
+          class="w-full bg-[#0a0803] border border-amber-900/50 rounded-xl pl-3.5 pr-10 py-2.5 text-xs text-white placeholder-amber-300/30 focus:outline-none focus:border-amber-500 focus:ring-1 focus:ring-amber-500 transition-all" />
         
         <button 
           type="button" 
           (click)="showConfirmPassword.set(!showConfirmPassword())"
-          class="absolute right-3 top-1/2 -translate-y-1/2 text-purple-400 hover:text-white transition-colors cursor-pointer">
+          class="absolute right-3 top-1/2 -translate-y-1/2 text-amber-400/70 hover:text-amber-300 transition-colors cursor-pointer">
           @if (showConfirmPassword()) {
             <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858-5.908a8.98 8.98 0 012.122-.363c4.478 0 8.268 2.943 9.542 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21f-9-9" />
@@ -113,7 +113,7 @@
     <button 
       type="submit" 
       [disabled]="isSubmitting()"
-      class="w-full mt-2 py-3 bg-gradient-to-r from-[#C86D2A] to-[#B45309] hover:from-[#D97706] hover:to-[#C86D2A] text-white font-black text-xs rounded-xl transition-all shadow-md active:scale-95 cursor-pointer disabled:opacity-50">
+      class="w-full mt-2 py-3 bg-gradient-to-r from-amber-600 via-amber-700 to-amber-800 hover:brightness-110 text-white font-black text-xs rounded-xl transition-all shadow-lg shadow-amber-950/50 active:scale-95 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed border border-amber-500/40">
       @if (isSubmitting()) {
         <span>მიმდინარეობს განახლება...</span>
       } @else {

@@ -1,17 +1,17 @@
 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 animate-fadeIn text-zinc-100">
   
-  <a routerLink="/" class="inline-flex items-center gap-2 text-xs font-bold text-zinc-400 hover:text-rose-400 uppercase tracking-wider mb-8 transition-colors duration-200 group">
+  <a routerLink="/" class="inline-flex items-center gap-2 text-xs font-bold text-zinc-400 hover:text-amber-400 uppercase tracking-wider mb-8 transition-colors duration-200 group">
     <svg class="w-4 h-4 transform group-hover:-translate-x-1 transition-transform duration-200" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
       <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5"/>
     </svg>
     <span>მთავარზე დაბრუნება</span>
   </a>
 
-  <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 bg-zinc-900/80 backdrop-blur-xl p-6 sm:p-8 md:p-12 rounded-[40px] shadow-2xl border border-zinc-800/80 mb-12">
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 bg-zinc-950/80 backdrop-blur-xl p-6 sm:p-8 md:p-12 rounded-[40px] shadow-2xl border border-amber-900/30 mb-12">
     
     <div class="flex flex-col gap-4">
-      <div class="relative group bg-zinc-950 rounded-[32px] overflow-hidden flex items-center justify-center p-8 sm:p-12 min-h-[380px] md:min-h-[480px] border border-zinc-800 shadow-inner">
-        <div class="absolute inset-0 bg-gradient-to-tr from-rose-950/20 via-transparent to-rose-900/10 pointer-events-none"></div>
+      <div class="relative group bg-black rounded-[32px] overflow-hidden flex items-center justify-center p-8 sm:p-12 min-h-[380px] md:min-h-[480px] border border-amber-900/40 shadow-inner">
+        <div class="absolute inset-0 bg-gradient-to-tr from-amber-950/30 via-transparent to-amber-900/10 pointer-events-none"></div>
 
         @if (primaryImage()) {
           <img [src]="primaryImage()"
@@ -23,8 +23,8 @@
                title="დააჭირეთ სურათის გასადიდებლად" />
         } @else if (isLoadingProduct()) {
           <div class="flex flex-col items-center justify-center z-10">
-            <div class="w-12 h-12 border-4 border-rose-900/40 border-t-rose-500 rounded-full animate-spin mb-4"></div>
-            <p class="text-zinc-500 font-black tracking-widest uppercase text-[10px] animate-pulse">
+            <div class="w-12 h-12 border-4 border-amber-900/40 border-t-amber-500 rounded-full animate-spin mb-4"></div>
+            <p class="text-amber-200/60 font-black tracking-widest uppercase text-[10px] animate-pulse">
               მონაცემები იტვირთება...
             </p>
           </div>
@@ -33,7 +33,7 @@
         }
 
         @if (primaryImage()) {
-          <div class="absolute bottom-4 right-4 bg-zinc-900/80 backdrop-blur-md p-2 rounded-xl border border-zinc-800 text-zinc-400 group-hover:text-rose-400 transition-colors pointer-events-none z-20 opacity-0 group-hover:opacity-100">
+          <div class="absolute bottom-4 right-4 bg-zinc-900/80 backdrop-blur-md p-2 rounded-xl border border-amber-900/40 text-amber-200/60 group-hover:text-amber-400 transition-colors pointer-events-none z-20 opacity-0 group-hover:opacity-100">
             <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607zM10.5 7.5v6m3-3h-6"/>
             </svg>
@@ -46,8 +46,8 @@
           @for (img of product()!.carouselImages; track $index) {
             <button (click)="updateCoverImage(img)" 
                     type="button"
-                    class="w-20 h-20 rounded-2xl bg-zinc-950 border overflow-hidden flex-shrink-0 p-2 transition-all duration-200 cursor-pointer"
-                    [class]="product()?.coverImage === img ? 'border-rose-600 ring-2 ring-rose-600/30' : 'border-zinc-800 hover:border-rose-800'">
+                    class="w-20 h-20 rounded-2xl bg-black border overflow-hidden flex-shrink-0 p-2 transition-all duration-200 cursor-pointer"
+                    [class]="product()?.coverImage === img ? 'border-amber-500 ring-2 ring-amber-500/30' : 'border-amber-900/30 hover:border-amber-700'">
               <img [src]="img" 
               class="w-full h-full object-contain" 
               [alt]="product()?.productName" 
@@ -61,10 +61,10 @@
     </div>
 
     <div class="flex flex-col py-2">
-      <nav class="flex gap-2 text-[10px] font-black text-zinc-500 uppercase tracking-widest mb-4">
-        <span class="hover:text-rose-400 transition-colors cursor-pointer" routerLink="/">მაღაზია</span>
-        <span class="text-zinc-700">/</span>
-        <span class="text-rose-400">{{ product()?.category || '3D მოდელი' }}</span>
+      <nav class="flex gap-2 text-[10px] font-black text-amber-200/60 uppercase tracking-widest mb-4">
+        <span class="hover:text-amber-400 transition-colors cursor-pointer" routerLink="/">მაღაზია</span>
+        <span class="text-amber-900/80">/</span>
+        <span class="text-amber-400">{{ product()?.category || '3D მოდელი' }}</span>
       </nav>
 
       <h1 class="text-3xl sm:text-4xl font-black text-white mb-4 leading-tight tracking-tight">
@@ -72,25 +72,25 @@
       </h1>
 
       <div class="flex items-center gap-3 mb-6">
-        <div class="flex items-center gap-1 text-rose-400">
+        <div class="flex items-center gap-1 text-amber-400">
           @for (star of starsArray; track star) {
-            <svg class="w-4 h-4" [class]="star <= averageRating() ? 'fill-rose-400 text-rose-400' : 'fill-zinc-800 text-zinc-700'" viewBox="0 0 24 24">
+            <svg class="w-4 h-4" [class]="star <= averageRating() ? 'fill-amber-400 text-amber-400' : 'fill-zinc-800 text-zinc-700'" viewBox="0 0 24 24">
               <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/>
             </svg>
           }
         </div>
         <span class="text-sm font-bold text-white">{{ averageRating() }}</span>
-        <span class="text-xs text-zinc-500">({{ reviews().length }} შეფასება)</span>
+        <span class="text-xs text-amber-200/50">({{ reviews().length }} შეფასება)</span>
       </div>
 
-      <div class="flex items-center gap-6 mb-8 bg-zinc-950/80 p-4 rounded-2xl border border-zinc-800 w-fit">
+      <div class="flex items-center gap-6 mb-8 bg-black/80 p-4 rounded-2xl border border-amber-900/40 w-fit">
         <div class="flex flex-col">
-          <span class="text-zinc-500 text-[10px] font-black uppercase tracking-wider mb-0.5">საუკეთესო ფასი</span>
-          <span class="text-3xl font-black text-rose-400 font-mono tracking-tight">
+          <span class="text-amber-200/60 text-[10px] font-black uppercase tracking-wider mb-0.5">საუკეთესო ფასი</span>
+          <span class="text-3xl font-black text-amber-400 font-mono tracking-tight">
             {{ product()?.price !== undefined ? currencyService.formatPrice(product()!.price) : '' }}
           </span>
         </div>
-        <div class="h-8 w-px bg-zinc-800"></div>
+        <div class="h-8 w-px bg-amber-900/40"></div>
         <span class="bg-emerald-500/10 text-emerald-400 text-xs font-bold px-3 py-1.5 rounded-xl border border-emerald-500/20 flex items-center gap-1.5 shadow-sm">
           <div class="w-1.5 h-1.5 bg-emerald-400 rounded-full animate-pulse"></div>
           მარაგშია
@@ -98,23 +98,23 @@
       </div>
 
       <div class="mb-10">
-        <h3 class="text-xs font-bold text-zinc-400 uppercase tracking-wider mb-3">აღწერა</h3>
-        <p class="text-zinc-400 text-base leading-relaxed font-medium">
+        <h3 class="text-xs font-bold text-amber-200/70 uppercase tracking-wider mb-3">აღწერა</h3>
+        <p class="text-amber-100/70 text-base leading-relaxed font-medium">
           {{ product()?.description || 'ამ პროდუქტზე დეტალური ინფორმაცია ჯერ არ არის დამატებული. ჩვენი გუნდი მუშაობს მონაცემების განახლებაზე.' }}
         </p>
       </div>
 
-      <div class="mt-auto pt-6 border-t border-zinc-800/80 flex gap-4">
+      <div class="mt-auto pt-6 border-t border-amber-900/40 flex gap-4">
         <button (click)="addToCart()"
                 type="button"
-                class="flex-1 bg-gradient-to-r from-rose-800 to-rose-900 hover:from-rose-700 hover:to-rose-800 text-white py-4 px-6 rounded-2xl font-black text-sm transition-all duration-300 shadow-lg shadow-rose-950/50 border border-rose-700/40 active:scale-[0.98] flex items-center justify-center gap-2.5 cursor-pointer">
+                class="flex-1 bg-gradient-to-r from-[#d4a359] via-[#b8860b] to-[#966f13] hover:brightness-110 text-zinc-950 py-4 px-6 rounded-2xl font-black text-sm transition-all duration-300 shadow-lg shadow-amber-950/60 border border-amber-300/40 active:scale-[0.98] flex items-center justify-center gap-2.5 cursor-pointer">
           <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 10.5V6a3.75 3.75 0 10-7.5 0v4.5m11.356-1.993l1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 01-1.12-1.243l1.264-12A1.125 1.125 0 015.513 7.5h12.974c.576 0 1.059.435 1.119 1.007zM8.625 10.5a.375.375 0 11-.75 0 .375.375 0 01.75 0zm7.5 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z"/>
           </svg>
           <span>კალათაში დამატება</span>
         </button>
 
-        <button type="button" class="px-5 bg-zinc-950 border border-zinc-800 text-zinc-400 hover:text-rose-400 hover:bg-rose-950/30 hover:border-rose-800/50 rounded-2xl transition-all duration-300 active:scale-90 flex items-center justify-center group/wish cursor-pointer">
+        <button type="button" class="px-5 bg-black border border-amber-900/40 text-amber-200/60 hover:text-amber-400 hover:bg-amber-950/30 hover:border-amber-700/50 rounded-2xl transition-all duration-300 active:scale-90 flex items-center justify-center group/wish cursor-pointer">
           <svg class="w-5 h-5 transform group-hover/wish:scale-110 transition-transform duration-200" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z"/>
           </svg>
@@ -124,23 +124,23 @@
     </div>
   </div>
 
-  <div class="bg-zinc-900/80 backdrop-blur-xl p-6 sm:p-8 md:p-10 rounded-[32px] border border-zinc-800/80 shadow-xl mb-12">
+  <div class="bg-zinc-950/80 backdrop-blur-xl p-6 sm:p-8 md:p-10 rounded-[32px] border border-amber-900/30 shadow-xl mb-12">
     <div class="flex items-center justify-between mb-8">
       <div>
         <h2 class="text-xl sm:text-2xl font-black text-white tracking-tight">მომხმარებელთა შეფასებები</h2>
-        <p class="text-xs font-medium text-zinc-400 mt-0.5">გაუზიარეთ შთაბეჭდილება სხვა მომხმარებლებს</p>
+        <p class="text-xs font-medium text-amber-200/60 mt-0.5">გაუზიარეთ შთაბეჭდილება სხვა მომხმარებლებს</p>
       </div>
-      <div class="flex items-center gap-2 bg-zinc-950 px-4 py-2 rounded-2xl border border-zinc-800">
-        <span class="text-lg font-black text-rose-400">{{ averageRating() }}</span>
-        <span class="text-xs text-zinc-500">/ 5</span>
+      <div class="flex items-center gap-2 bg-black px-4 py-2 rounded-2xl border border-amber-900/40">
+        <span class="text-lg font-black text-amber-400">{{ averageRating() }}</span>
+        <span class="text-xs text-amber-200/50">/ 5</span>
       </div>
     </div>
 
-    <div class="bg-zinc-950/80 p-6 rounded-3xl border border-zinc-800/80 mb-10">
-      <h3 class="text-sm font-bold text-zinc-300 mb-4 uppercase tracking-wider">დატოვეთ შეფასება</h3>
+    <div class="bg-black/80 p-6 rounded-3xl border border-amber-900/30 mb-10">
+      <h3 class="text-sm font-bold text-amber-200/80 mb-4 uppercase tracking-wider">დატოვეთ შეფასება</h3>
       
       <div class="flex items-center gap-2 mb-4">
-        <span class="text-xs text-zinc-400 mr-2">თქვენი შეფასება:</span>
+        <span class="text-xs text-amber-200/60 mr-2">თქვენი შეფასება:</span>
         <div class="flex items-center gap-1">
           @for (star of starsArray; track star) {
             <button type="button" 
@@ -149,7 +149,7 @@
                     (mouseleave)="hoverRating.set(0)"
                     class="focus:outline-none transform hover:scale-125 transition-transform duration-150 cursor-pointer">
               <svg class="w-6 h-6" 
-                   [class]="star <= (hoverRating() || newRating()) ? 'fill-rose-400 text-rose-400' : 'fill-zinc-800 text-zinc-700'" 
+                   [class]="star <= (hoverRating() || newRating()) ? 'fill-amber-400 text-amber-400' : 'fill-zinc-800 text-zinc-700'" 
                    viewBox="0 0 24 24">
                 <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/>
               </svg>
@@ -164,14 +164,14 @@
                [disabled]="isSubmittingReview()"
                (keyup.enter)="submitReview()"
                placeholder="დაწერეთ თქვენი შთაბეჭდილება..." 
-               class="flex-1 bg-zinc-900 border border-zinc-800 rounded-2xl px-5 py-3.5 text-sm text-white focus:outline-none focus:border-rose-600 transition-colors disabled:opacity-50">
+               class="flex-1 bg-zinc-900/90 border border-amber-900/40 rounded-2xl px-5 py-3.5 text-sm text-white focus:outline-none focus:border-amber-500 transition-colors disabled:opacity-50">
         
         <button (click)="submitReview()" 
                 type="button"
                 [disabled]="isSubmittingReview()"
-                class="bg-gradient-to-r from-rose-800 to-rose-900 hover:from-rose-700 hover:to-rose-800 text-white font-black px-6 py-3.5 rounded-2xl text-sm transition-all duration-200 border border-rose-700/40 active:scale-95 flex items-center justify-center gap-2 disabled:opacity-50 cursor-pointer shadow-md shadow-rose-950/40">
+                class="bg-gradient-to-r from-[#d4a359] via-[#b8860b] to-[#966f13] hover:brightness-110 text-zinc-950 font-black px-6 py-3.5 rounded-2xl text-sm transition-all duration-200 border border-amber-300/40 active:scale-95 flex items-center justify-center gap-2 disabled:opacity-50 cursor-pointer shadow-md shadow-amber-950/40">
           @if (isSubmittingReview()) {
-            <div class="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+            <div class="w-4 h-4 border-2 border-zinc-950 border-t-transparent rounded-full animate-spin"></div>
           } @else {
             <span>გაგზავნა</span>
           }
@@ -181,94 +181,37 @@
 
     <div class="space-y-4">
       @for (rev of reviews(); track rev.id) {
-        <div class="bg-zinc-950/40 p-5 rounded-2xl border border-zinc-800/50 flex flex-col gap-2">
+        <div class="bg-black/40 p-5 rounded-2xl border border-amber-900/30 flex flex-col gap-2">
           <div class="flex items-center justify-between">
             <div class="flex items-center gap-3">
-              <div class="w-8 h-8 rounded-full bg-gradient-to-br from-rose-800 to-rose-950 border border-rose-700/50 text-rose-200 font-black text-xs flex items-center justify-center">
+              <div class="w-8 h-8 rounded-full bg-gradient-to-br from-amber-700 to-amber-950 border border-amber-500/40 text-amber-200 font-black text-xs flex items-center justify-center">
                 {{ (rev.userName || 'U').charAt(0).toUpperCase() }}
               </div>
               <span class="font-bold text-white text-sm">
                 {{ rev.userName || 'მომხმარებელი' }}
               </span>
             </div>
-            <span class="text-[11px] text-zinc-500 font-medium">
+            <span class="text-[11px] text-amber-200/50 font-medium">
               {{ rev.createdAt ? (rev.createdAt | date:'dd MMM yyyy') : 'ახლახან' }}
             </span>
           </div>
 
-          <div class="flex items-center gap-1 text-rose-400 my-1">
+          <div class="flex items-center gap-1 text-amber-400 my-1">
             @for (star of starsArray; track star) {
-              <svg class="w-3.5 h-3.5" [class]="star <= rev.rating ? 'fill-rose-400 text-rose-400' : 'fill-zinc-800 text-zinc-800'" viewBox="0 0 24 24">
+              <svg class="w-3.5 h-3.5" [class]="star <= rev.rating ? 'fill-amber-400 text-amber-400' : 'fill-zinc-800 text-zinc-800'" viewBox="0 0 24 24">
                 <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/>
               </svg>
             }
           </div>
 
-          <p class="text-zinc-300 text-sm leading-relaxed">{{ rev.comment }}</p>
+          <p class="text-amber-100/70 text-sm leading-relaxed">{{ rev.comment }}</p>
         </div>
       } @empty {
-        <p class="text-zinc-500 text-sm text-center py-6">ამ პროდუქტზე შეფასება ჯერ არ არის დატოვებული. იყავით პირველი!</p>
+        <p class="text-amber-200/50 text-sm text-center py-6">ამ პროდუქტზე შეფასება ჯერ არ არის დატოვებული. იყავით პირველი!</p>
       }
     </div>
   </div>
 
-  <div class="bg-zinc-900/60 backdrop-blur-xl p-6 sm:p-8 md:p-10 rounded-[32px] border border-zinc-800/80 shadow-xl">
-    <div class="flex items-center gap-3 mb-8">
-      <div class="p-2.5 bg-rose-950/60 rounded-2xl border border-rose-800/40 text-rose-400">
-        <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M9.879 7.519c1.171-1.025 3.071-1.025 4.242 0 1.172 1.025 1.172 2.687 0 3.712-.203.179-.43.326-.67.442-.745.361-1.45.999-1.45 1.827v.75M12 18h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
-        </svg>
-      </div>
-      <div>
-        <h2 class="text-xl sm:text-2xl font-black text-white tracking-tight">ხშირად დასმული შეკითხვები</h2>
-        <p class="text-xs font-medium text-zinc-400 mt-0.5">პასუხები ყველაზე გავრცელებულ კითხვებზე</p>
-      </div>
-    </div>
-
-    <div class="space-y-4">
-      <details class="group bg-zinc-950/60 rounded-2xl border border-zinc-800/80 overflow-hidden transition-all duration-200 [&[open]]:border-rose-900/60">
-        <summary class="flex justify-between items-center p-5 cursor-pointer font-bold text-sm text-zinc-200 hover:text-rose-400 transition-colors list-none select-none">
-          <span>როგორ მივიღებ შეძენილ 3D მოდელს?</span>
-          <span class="transform group-open:rotate-180 transition-transform duration-300 text-zinc-500 group-open:text-rose-400 ml-4">
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5"/>
-            </svg>
-          </span>
-        </summary>
-        <div class="px-5 pb-5 text-sm text-zinc-400 leading-relaxed font-medium border-t border-zinc-800/40 pt-3">
-          გადახდის მეთოდის არჩევის თანავე, ჩვენი წარმომადგენელი დაგიკავშირდებათ და გაგაცნობთ ნივთის მიწოდების შესახებ ინფორმაციას.
-        </div>
-      </details>
-
-      <details class="group bg-zinc-950/60 rounded-2xl border border-zinc-800/80 overflow-hidden transition-all duration-200 [&[open]]:border-rose-900/60">
-        <summary class="flex justify-between items-center p-5 cursor-pointer font-bold text-sm text-zinc-200 hover:text-rose-400 transition-colors list-none select-none">
-          <span>რა ფორმატშია წარმოდგენილი ფაილები?</span>
-          <span class="transform group-open:rotate-180 transition-transform duration-300 text-zinc-500 group-open:text-rose-400 ml-4">
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5"/>
-            </svg>
-          </span>
-        </summary>
-        <div class="px-5 pb-5 text-sm text-zinc-400 leading-relaxed font-medium border-t border-zinc-800/40 pt-3">
-          მოდელების უმეტესობა ხელმისაწვდომია პოპულარულ 3D ფორმატებში. კონკრეტული ფორმატები მითითებულია პროდუქტის აღწერაში.
-        </div>
-      </details>
-
-      <details class="group bg-zinc-950/60 rounded-2xl border border-zinc-800/80 overflow-hidden transition-all duration-200 [&[open]]:border-rose-900/60">
-        <summary class="flex justify-between items-center p-5 cursor-pointer font-bold text-sm text-zinc-200 hover:text-rose-400 transition-colors list-none select-none">
-          <span>შეიძლება თუ არა მოდელის გამოყენება კომერციული პროექტებისთვის?</span>
-          <span class="transform group-open:rotate-180 transition-transform duration-300 text-zinc-500 group-open:text-rose-400 ml-4">
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5"/>
-            </svg>
-          </span>
-        </summary>
-        <div class="px-5 pb-5 text-sm text-zinc-400 leading-relaxed font-medium border-t border-zinc-800/40 pt-3">
-          დიახ, შეძენილი მოდელების გამოყენება შეგიძლიათ როგორც პირად, ასევე კომერციულ პროექტებში (თამაშები, რენდერები, ანიმაციები), თუმცა აკრძალულია ფაილის პირდაპირი გადაყიდვა ან გავრცელება.
-        </div>
-      </details>
-    </div>
-  </div>
 
 </div>
 
@@ -278,7 +221,7 @@
     
     <button (click)="closeImageModal()" 
             type="button"
-            class="absolute top-6 right-6 text-zinc-400 hover:text-white bg-zinc-900/80 hover:bg-zinc-800 p-3 rounded-2xl border border-zinc-700 transition-all duration-200 z-10 active:scale-95 cursor-pointer">
+            class="absolute top-6 right-6 text-amber-200/60 hover:text-white bg-zinc-900/80 hover:bg-zinc-800 p-3 rounded-2xl border border-amber-900/40 transition-all duration-200 z-10 active:scale-95 cursor-pointer">
       <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
         <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
       </svg>

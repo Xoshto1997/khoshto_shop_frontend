@@ -1,55 +1,61 @@
-<div class="p-6 md:p-10 max-w-7xl mx-auto space-y-8 bg-zinc-950 text-white min-h-screen">
+<div class="p-6 md:p-10 max-w-7xl mx-auto space-y-8 bg-zinc-950 text-amber-100 min-h-screen">
   
-  <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-zinc-800 pb-6">
+  <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-amber-900/50 pb-6">
     <div>
       <h1 class="text-3xl font-black tracking-tight text-white">ადმინ დეშბორდი</h1>
-      <p class="text-zinc-400 text-sm mt-1">რეალური დროის გაყიდვებისა და შემოსავლების ანალიტიკა</p>
+      <p class="text-amber-200/70 text-sm mt-1">რეალური დროის გაყიდვებისა და შემოსავლების ანალიტიკა</p>
     </div>
-    <button (click)="fetchAnalytics()" class="px-4 py-2 bg-zinc-900 hover:bg-zinc-800 border border-zinc-700/60 rounded-xl text-xs font-semibold text-zinc-300 transition flex items-center gap-2 w-fit">
-      განახლება
+    <button 
+      type="button"
+      (click)="fetchAnalytics()" 
+      class="px-4 py-2 bg-[#0a0803] hover:bg-amber-950/60 border border-amber-900/60 hover:border-amber-700/60 rounded-xl text-xs font-semibold text-amber-200 hover:text-amber-400 transition flex items-center gap-2 w-fit active:scale-95 cursor-pointer focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-amber-500">
+      <span>განახლება</span>
     </button>
   </div>
 
   @if (isLoading()) {
-    <div class="flex justify-center items-center py-20 text-zinc-500 text-sm">
+    <div class="flex justify-center items-center py-20 text-amber-200/60 text-sm animate-pulse">
       მონაცემები იტვირთება...
     </div>
   } @else if (stats()) {
 
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
       
-      <div class="bg-zinc-900/60 border border-zinc-800 p-6 rounded-2xl relative overflow-hidden">
-        <div class="absolute -right-4 -top-4 w-24 h-24 bg-rose-500/10 rounded-full blur-xl"></div>
-        <span class="text-xs font-bold text-zinc-400 uppercase tracking-wider">მთლიანი შემოსავალი</span>
-        <div class="text-3xl font-black text-rose-500 mt-2">
+      <!-- მთლიანი შემოსავალი -->
+      <div class="bg-zinc-950/90 border border-amber-900/50 p-6 rounded-2xl relative overflow-hidden shadow-xl">
+        <div class="absolute -right-4 -top-4 w-24 h-24 bg-amber-500/10 rounded-full blur-xl"></div>
+        <span class="text-xs font-bold text-amber-200/70 uppercase tracking-wider">მთლიანი შემოსავალი</span>
+        <div class="text-3xl font-black text-amber-400 mt-2 font-mono">
           ₾{{ stats()?.totalRevenue | number:'1.2-2' }}
         </div>
-        <p class="text-xs text-zinc-500 mt-2">ყველა წარმატებული (PAID) შეკვეთიდან</p>
+        <p class="text-xs text-amber-200/60 mt-2">ყველა წარმატებული (PAID) შეკვეთიდან</p>
       </div>
 
-      <div class="bg-zinc-900/60 border border-zinc-800 p-6 rounded-2xl relative overflow-hidden">
+      <!-- ამ თვის შემოსავალი -->
+      <div class="bg-zinc-950/90 border border-amber-900/50 p-6 rounded-2xl relative overflow-hidden shadow-xl">
         <div class="absolute -right-4 -top-4 w-24 h-24 bg-emerald-500/10 rounded-full blur-xl"></div>
-        <span class="text-xs font-bold text-zinc-400 uppercase tracking-wider">ამ თვის შემოსავალი</span>
-        <div class="text-3xl font-black text-emerald-400 mt-2">
+        <span class="text-xs font-bold text-amber-200/70 uppercase tracking-wider">ამ თვის შემოსავალი</span>
+        <div class="text-3xl font-black text-emerald-400 mt-2 font-mono">
           ₾{{ stats()?.currentMonthRevenue | number:'1.2-2' }}
         </div>
-        <p class="text-xs text-zinc-500 mt-2">მიმდინარე თვის ჯამური მოგება</p>
+        <p class="text-xs text-amber-200/60 mt-2">მიმდინარე თვის ჯამური მოგება</p>
       </div>
 
-      <div class="bg-zinc-900/60 border border-zinc-800 p-6 rounded-2xl relative overflow-hidden">
+      <!-- შესრულებული შეკვეთები -->
+      <div class="bg-zinc-950/90 border border-amber-900/50 p-6 rounded-2xl relative overflow-hidden shadow-xl">
         <div class="absolute -right-4 -top-4 w-24 h-24 bg-sky-500/10 rounded-full blur-xl"></div>
-        <span class="text-xs font-bold text-zinc-400 uppercase tracking-wider">შესრულებული შეკვეთები</span>
-        <div class="text-3xl font-black text-sky-400 mt-2">
+        <span class="text-xs font-bold text-amber-200/70 uppercase tracking-wider">შესრულებული შეკვეთები</span>
+        <div class="text-3xl font-black text-sky-400 mt-2 font-mono">
           {{ stats()?.totalPaidOrders }}
         </div>
-        <p class="text-xs text-zinc-500 mt-2">გადახდილი ტრანზაქციების რაოდენობა</p>
+        <p class="text-xs text-amber-200/60 mt-2">გადახდილი ტრანზაქციების რაოდენობა</p>
       </div>
 
     </div>
 
     @defer (on viewport) {
-      <div class="bg-zinc-900/50 border border-zinc-800/80 p-6 rounded-2xl space-y-4">
-        <h2 class="text-lg font-bold text-zinc-200">თვიური შემოსავლების დინამიკა</h2>
+      <div class="bg-zinc-950/90 border border-amber-900/50 p-6 rounded-2xl space-y-4 shadow-xl">
+        <h2 class="text-lg font-bold text-white">თვიური შემოსავლების დინამიკა</h2>
         
         <div class="h-80 w-full relative">
           <canvas baseChart
@@ -60,35 +66,41 @@
         </div>
       </div>
     } @placeholder {
-      <div class="bg-zinc-900/30 border border-zinc-800/50 p-6 rounded-2xl h-80 flex items-center justify-center text-zinc-600 text-sm animate-pulse">
+      <div class="bg-[#0a0803]/60 border border-amber-900/40 p-6 rounded-2xl h-80 flex items-center justify-center text-amber-200/40 text-sm animate-pulse">
         ჩარტი იტვირთება...
       </div>
     } @loading (after 100ms; minimum 500ms) {
-      <div class="bg-zinc-900/30 border border-zinc-800/50 p-6 rounded-2xl h-80 flex items-center justify-center text-zinc-500 text-sm">
+      <div class="bg-[#0a0803]/60 border border-amber-900/40 p-6 rounded-2xl h-80 flex items-center justify-center text-amber-200/60 text-sm">
         გრაფიკი მუშავდება...
       </div>
     }
 
     @defer (on viewport) {
-      <div class="bg-zinc-900/50 border border-zinc-800/80 rounded-2xl overflow-hidden">
-        <div class="p-5 border-b border-zinc-800">
-          <h3 class="font-bold text-zinc-200 text-sm">დეტალური თვიური რეპორტი</h3>
+      <div class="bg-zinc-950/90 border border-amber-900/50 rounded-2xl overflow-hidden shadow-xl">
+        <div class="p-5 border-b border-amber-900/50 bg-[#0a0803]">
+          <h3 class="font-bold text-white text-sm">დეტალური თვიური რეპორტი</h3>
         </div>
         <div class="overflow-x-auto">
-          <table class="w-full text-left text-sm text-zinc-400">
-            <thead class="bg-zinc-950/60 uppercase text-[11px] font-bold text-zinc-500 border-b border-zinc-800">
+          <table class="w-full text-left text-sm text-amber-100/90">
+            <thead class="bg-[#0a0803] uppercase text-[11px] font-bold text-amber-200/70 border-b border-amber-900/50">
               <tr>
-                <th class="p-4">თვე</th>
-                <th class="p-4">შეკვეთები</th>
-                <th class="p-4 text-right">შემოსავალი</th>
+                <th scope="col" class="p-4">თვე</th>
+                <th scope="col" class="p-4">შეკვეთები</th>
+                <th scope="col" class="p-4 text-right">შემოსავალი</th>
               </tr>
             </thead>
-            <tbody class="divide-y divide-zinc-800/50">
+            <tbody class="divide-y divide-amber-900/40">
               @for (item of stats()?.monthlyRevenues; track item.yearMonth) {
-                <tr class="hover:bg-zinc-800/30 transition">
-                  <td class="p-4 font-semibold text-zinc-200">{{ item.yearMonth }}</td>
-                  <td class="p-4"><span class="px-2.5 py-1 bg-zinc-800 text-zinc-300 rounded-lg text-xs">{{ item.orderCount }} შეკვეთა</span></td>
-                  <td class="p-4 text-right font-bold text-rose-400">₾{{ item.totalRevenue | number:'1.2-2' }}</td>
+                <tr class="hover:bg-amber-950/30 transition-colors duration-150">
+                  <td class="p-4 font-semibold text-white font-mono">{{ item.yearMonth }}</td>
+                  <td class="p-4">
+                    <span class="px-2.5 py-1 bg-[#0a0803] text-amber-300 border border-amber-900/50 rounded-lg text-xs font-medium">
+                      {{ item.orderCount }} შეკვეთა
+                    </span>
+                  </td>
+                  <td class="p-4 text-right font-bold text-amber-400 font-mono">
+                    ₾{{ item.totalRevenue | number:'1.2-2' }}
+                  </td>
                 </tr>
               }
             </tbody>
@@ -96,7 +108,7 @@
         </div>
       </div>
     } @placeholder {
-      <div class="bg-zinc-900/30 border border-zinc-800/50 rounded-2xl h-48 animate-pulse"></div>
+      <div class="bg-[#0a0803]/60 border border-amber-900/40 rounded-2xl h-48 animate-pulse"></div>
     }
 
   }

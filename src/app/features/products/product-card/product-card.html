@@ -8,33 +8,33 @@
     price: product().price, 
     description: product().description 
   }" 
-  class="bg-zinc-900/80 backdrop-blur-md rounded-[28px] shadow-xl hover:shadow-2xl hover:shadow-rose-950/40 border border-zinc-800/80 hover:border-rose-900/50 p-5 transition-all duration-300 flex flex-col justify-between group cursor-pointer hover:-translate-y-1.5 text-zinc-100">
+  class="bg-zinc-900/80 backdrop-blur-md rounded-[28px] shadow-xl hover:shadow-2xl hover:shadow-amber-950/40 border border-amber-900/50 hover:border-amber-600/50 p-5 transition-all duration-300 flex flex-col justify-between group cursor-pointer hover:-translate-y-1.5 text-zinc-100">
   
   <div>
-    <div class="bg-zinc-950 h-52 w-full rounded-2xl flex items-center justify-center mb-5 relative overflow-hidden border border-zinc-800 shadow-inner group-hover:border-rose-900/40 transition-colors duration-300">
+    <div class="bg-zinc-950 h-52 w-full rounded-2xl flex items-center justify-center mb-5 relative overflow-hidden border border-zinc-800 shadow-inner group-hover:border-amber-600/40 transition-colors duration-300">
       
       @if (product().coverImage) {
         <img [src]="product().coverImage" 
              [alt]="product().productName" 
              class="h-full w-full object-cover filter drop-shadow-[0_8px_16px_rgba(0,0,0,0.6)] group-hover:scale-105 transition-transform duration-500 ease-out">
       } @else {
-        <svg class="w-12 h-12 text-zinc-600 group-hover:text-rose-400 group-hover:scale-105 transition-all duration-500 ease-out" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+        <svg class="w-12 h-12 text-zinc-600 group-hover:text-amber-400 group-hover:scale-105 transition-all duration-500 ease-out" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" d="M21 7.5l-9-5.25L3 7.5m18 0l-9 5.25m9-5.25v9l-9 5.25M3 7.5l9 5.25M3 7.5v9l9 5.25m0-9v9"/>
         </svg>
       }
       
-      <span class="absolute top-3 right-3 bg-gradient-to-r from-rose-800 to-rose-900 text-white text-[10px] font-black uppercase tracking-wider px-2.5 py-1 rounded-lg shadow-md border border-rose-700/40">
+      <span class="absolute top-3 right-3 bg-gradient-to-r from-amber-600 via-amber-700 to-amber-800 text-white text-[10px] font-black uppercase tracking-wider px-2.5 py-1 rounded-lg shadow-md border border-amber-500/40">
         New
       </span>
     </div>
     
-    <h3 class="text-base font-bold text-white mb-2 group-hover:text-rose-400 transition-colors duration-200 line-clamp-1 px-0.5">
+    <h3 class="text-base font-bold text-white mb-2 group-hover:text-amber-400 transition-colors duration-200 line-clamp-1 px-0.5">
       {{ product().productName }}
     </h3>
 
     <div class="flex items-baseline gap-1.5 mb-2 px-0.5">
       <span class="text-[11px] font-bold text-zinc-500 uppercase tracking-wider">ფასი:</span>
-      <span class="text-xl font-black text-rose-400 font-mono tracking-tight">
+      <span class="text-xl font-black text-amber-400 font-mono tracking-tight">
         {{ currencyService.formatPrice(product().price) }}
       </span>
     </div>
@@ -47,14 +47,15 @@
   <div class="flex items-center gap-2.5 mt-auto pt-4 border-t border-zinc-800/80">
     <button
       (click)="$event.stopPropagation()"
-      class="px-3.5 py-2.5 bg-zinc-800/60 hover:bg-rose-500/10 text-zinc-300 hover:text-rose-400 text-xs font-semibold rounded-xl transition-all duration-200 active:scale-95 flex items-center justify-center border border-zinc-700/50 hover:border-rose-500/30 whitespace-nowrap"
+      [routerLink]="['/product', product().id]"
+      class="px-3.5 py-2.5 bg-zinc-800/60 hover:bg-amber-500/10 text-zinc-300 hover:text-amber-400 text-xs font-semibold rounded-xl transition-all duration-200 active:scale-95 flex items-center justify-center border border-zinc-700/50 hover:border-amber-500/30 whitespace-nowrap"
       title="პროდუქტის დეტალები">
       დეტალები
     </button>
     
     <button 
-      (click)="$event.stopPropagation()"
-      class="flex-1 bg-gradient-to-r from-rose-800 to-rose-900 hover:from-rose-700 hover:to-rose-800 text-white text-xs font-bold py-2.5 px-3 rounded-xl transition-all duration-300 active:scale-[0.98] shadow-lg shadow-rose-950/40 flex items-center justify-center gap-1.5 border border-rose-700/40 whitespace-nowrap">
+      (click)="addToCart()"
+      class="flex-1 bg-gradient-to-r from-amber-600 via-amber-700 to-amber-800 hover:from-amber-500 hover:to-amber-700 text-white text-xs font-bold py-2.5 px-3 rounded-xl transition-all duration-300 active:scale-[0.98] shadow-lg shadow-amber-950/40 flex items-center justify-center gap-1.5 border border-amber-500/40 whitespace-nowrap">
       <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
         <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"/>
       </svg>

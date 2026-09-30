@@ -4,9 +4,9 @@
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3.5 flex justify-between items-center">
     <a
       routerLink="/"
-      class="text-xl font-black text-white tracking-tight hover:opacity-90 transition-opacity"
+      class="text-xl font-black text-white tracking-tight hover:opacity-90 transition-opacity flex items-center gap-1"
     >
-      3DSTUDIO<span class="text-rose-500">.</span>
+      3DSTUDIO<span class="text-amber-500">.</span>
     </a>
 
     <div class="flex items-center gap-3 sm:gap-4">
@@ -14,11 +14,11 @@
         <div class="flex items-center gap-2">
           <a
             routerLink="/admin/analytics"
-            class="bg-zinc-900 border border-zinc-800 text-zinc-200 px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold hover:bg-zinc-800 hover:text-rose-400 transition-all duration-200 flex items-center gap-1.5 shadow-sm"
+            class="bg-zinc-900 border border-zinc-800 text-zinc-200 px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold hover:bg-zinc-800 hover:text-amber-400 transition-all duration-200 flex items-center gap-1.5 shadow-sm"
             title="ანალიტიკა"
           >
             <svg
-              class="w-4 h-4 text-rose-400"
+              class="w-4 h-4 text-amber-400"
               fill="none"
               stroke="currentColor"
               stroke-width="2"
@@ -35,10 +35,11 @@
 
           <a
             routerLink="/admin/orders"
-            class="bg-zinc-900 border border-zinc-800 text-zinc-200 px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold hover:bg-zinc-800 hover:text-white transition-all duration-200 flex items-center gap-1.5 shadow-sm"
+            class="bg-zinc-900 border border-zinc-800 text-zinc-200 px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold hover:bg-zinc-800 hover:text-amber-400 transition-all duration-200 flex items-center gap-1.5 shadow-sm"
+            title="შეკვეთები"
           >
             <svg
-              class="w-4 h-4 text-rose-400"
+              class="w-4 h-4 text-amber-400"
               fill="none"
               stroke="currentColor"
               stroke-width="2"
@@ -55,7 +56,7 @@
 
           <a
             routerLink="/add-product"
-            class="bg-gradient-to-r from-rose-800 to-rose-900 hover:from-rose-700 hover:to-rose-800 text-white border border-rose-700/40 px-3.5 py-2 rounded-xl text-xs sm:text-sm font-black transition-all duration-200 flex items-center gap-1.5 shadow-lg shadow-rose-950/50 active:scale-95"
+            class="bg-gradient-to-r from-amber-600 via-amber-700 to-amber-800 hover:from-amber-500 hover:to-amber-700 text-white border border-amber-500/40 px-3.5 py-2 rounded-xl text-xs sm:text-sm font-black transition-all duration-200 flex items-center gap-1.5 shadow-lg shadow-amber-950/50 active:scale-95"
           >
             <svg
               class="w-4 h-4"
@@ -71,12 +72,10 @@
         </div>
       }
 
-     
-
       @if (isUserLoggedIn) {
         <a
           routerLink="/cart"
-          class="relative p-2.5 text-zinc-400 hover:text-rose-400 bg-zinc-900 hover:bg-zinc-800/80 border border-zinc-800 rounded-xl transition-all duration-200 group"
+          class="relative p-2.5 text-zinc-400 hover:text-amber-400 bg-zinc-900 hover:bg-zinc-800/80 border border-zinc-800 rounded-xl transition-all duration-200 group"
           title="კალათა"
         >
           <svg
@@ -95,7 +94,7 @@
 
           @if (cartService.cartItemsCount() > 0) {
             <span
-              class="absolute -top-1.5 -right-1.5 bg-rose-600 text-white text-[9px] font-black w-5 h-5 flex items-center justify-center rounded-full border-2 border-zinc-950 animate-pulse shadow-md shadow-rose-950/40"
+              class="absolute -top-1.5 -right-1.5 bg-amber-500 text-zinc-950 text-[9px] font-black w-5 h-5 flex items-center justify-center rounded-full border-2 border-zinc-950 animate-pulse shadow-md shadow-amber-950/40"
             >
               {{ cartService.cartItemsCount() }}
             </span>
@@ -104,11 +103,11 @@
 
         <a
           routerLink="/my-orders"
-          class="bg-zinc-900 border border-zinc-800 text-zinc-300 hover:text-white hover:bg-zinc-800/80 px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all duration-200 flex items-center gap-1.5 shadow-sm"
+          class="bg-zinc-900 border border-zinc-800 text-zinc-300 hover:text-amber-400 hover:bg-zinc-800/80 px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all duration-200 flex items-center gap-1.5 shadow-sm"
           title="ჩემი შეკვეთები"
         >
           <svg
-            class="w-4 h-4 text-rose-400"
+            class="w-4 h-4 text-amber-400"
             fill="none"
             stroke="currentColor"
             stroke-width="2"
@@ -125,17 +124,17 @@
 
         <a
           routerLink="/profile"
-          class="flex items-center gap-2.5 bg-zinc-900 border border-zinc-800 hover:border-rose-500/40 hover:bg-zinc-800/80 px-3 py-1.5 rounded-xl transition-all duration-200 cursor-pointer shadow-sm group"
+          class="flex items-center gap-2.5 bg-zinc-900 border border-zinc-800 hover:border-amber-500/40 hover:bg-zinc-800/80 px-3 py-1.5 rounded-xl transition-all duration-200 cursor-pointer shadow-sm group"
           title="პროფილი / პაროლის შეცვლა"
         >
           <div
-            class="w-6 h-6 bg-rose-950/50 border border-rose-800/40 group-hover:border-rose-500/60 rounded-lg flex items-center justify-center text-rose-400 text-xs shrink-0 font-bold shadow-inner"
+            class="w-6 h-6 bg-amber-950/50 border border-amber-700/40 group-hover:border-amber-500/60 rounded-lg flex items-center justify-center text-amber-400 text-xs shrink-0 font-bold shadow-inner"
           >
             {{ currentUser()?.charAt(0)?.toUpperCase() || 'U' }}
           </div>
           <div class="flex flex-col text-left hidden sm:flex">
             <span
-              class="text-[9px] font-black uppercase tracking-widest text-zinc-500 group-hover:text-rose-400 transition-colors leading-none mb-0.5"
+              class="text-[9px] font-black uppercase tracking-widest text-zinc-500 group-hover:text-amber-400 transition-colors leading-none mb-0.5"
               >პროფილი</span
             >
             <span
@@ -148,7 +147,7 @@
 
         <button
           (click)="logout()"
-          class="p-2.5 text-zinc-400 hover:text-rose-400 bg-zinc-900 hover:bg-rose-500/10 border border-zinc-800 hover:border-rose-500/30 rounded-xl transition-all duration-200 group flex items-center justify-center"
+          class="p-2.5 text-zinc-400 hover:text-amber-400 bg-zinc-900 hover:bg-amber-500/10 border border-zinc-800 hover:border-amber-500/30 rounded-xl transition-all duration-200 group flex items-center justify-center"
           title="სისტემიდან გამოსვლა"
         >
           <svg
@@ -168,7 +167,7 @@
       } @else {
         <a
           routerLink="/login"
-          class="text-xs sm:text-sm font-bold text-white bg-gradient-to-r from-rose-800 to-rose-900 hover:from-rose-700 hover:to-rose-800 border border-rose-700/40 transition-all duration-200 px-4 py-2 rounded-xl shadow-lg shadow-rose-950/50"
+          class="text-xs sm:text-sm font-bold text-white bg-gradient-to-r from-amber-600 via-amber-700 to-amber-800 hover:from-amber-500 hover:to-amber-700 border border-amber-500/40 transition-all duration-200 px-4 py-2 rounded-xl shadow-lg shadow-amber-950/50"
         >
           შესვლა
         </a>
@@ -181,6 +180,7 @@
   <router-outlet></router-outlet>
 </main>
 
+<!-- Floating Messenger Button -->
 <a
   href="https://m.me/61587657993668"
   target="_blank"

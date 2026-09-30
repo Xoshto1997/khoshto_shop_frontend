@@ -1,41 +1,44 @@
-<div class="max-w-7xl mx-auto px-2.5 sm:px-4 py-6 sm:py-10 animate-fadeIn text-purple-100 bg-[#120B18] min-h-screen">
+<div class="max-w-7xl mx-auto px-2.5 sm:px-4 py-6 sm:py-10 animate-fadeIn text-amber-100 min-h-screen">
   
-  <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6 sm:mb-8 border-b border-[#3D1A45]/60 pb-5">
+  <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6 sm:mb-8 border-b border-amber-900/50 pb-5">
     <div class="flex items-center gap-3">
-      <div class="p-2.5 sm:p-3 bg-[#6B1124]/40 text-[#E08A4E] border border-[#C86D2A]/30 rounded-2xl shadow-inner shrink-0">
-        <svg class="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+      <div class="p-2.5 sm:p-3 bg-amber-500/10 text-amber-400 border border-amber-500/30 rounded-2xl shadow-inner shrink-0">
+        <svg class="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
           <path stroke-linecap="round" stroke-linejoin="round" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/>
         </svg>
       </div>
       <div class="min-w-0">
         <div class="flex items-center gap-2">
-          <span class="text-[9px] sm:text-[10px] uppercase tracking-widest font-extrabold text-[#E08A4E] bg-[#6B1124]/50 px-2 py-0.5 rounded border border-[#C86D2A]/30">
+          <span class="text-[9px] sm:text-[10px] uppercase tracking-widest font-extrabold text-amber-400 bg-amber-950/60 px-2 py-0.5 rounded border border-amber-800/40">
             Admin Console
           </span>
         </div>
         <h1 class="text-1.5xl sm:text-2xl font-black text-white tracking-tight mt-0.5 truncate">
           3DSTUDIO • შეკვეთების მართვა
         </h1>
-        <p class="text-purple-300/70 text-xs mt-0.5">
-          სულ ნაპოვნია: <span class="text-[#E08A4E] font-bold">{{ orders().length }}</span> 3D შეკვეთა
+        <p class="text-amber-200/70 text-xs mt-0.5">
+          სულ ნაპოვნია: <span class="text-amber-400 font-bold">{{ orders().length }}</span> 3D შეკვეთა
         </p>
       </div>
     </div>
     
     <div class="flex items-center gap-2.5 sm:gap-3 w-full sm:w-auto justify-between sm:justify-end">
       <button 
+        type="button"
         (click)="openCreateModal()"
-        class="flex-1 sm:flex-none flex items-center justify-center gap-2 px-3.5 sm:px-4 py-2.5 bg-gradient-to-r from-[#C86D2A] to-[#B45309] hover:from-[#D97706] hover:to-[#C86D2A] text-white font-black rounded-xl text-xs transition-all shadow-lg shadow-[#C86D2A]/20 active:scale-95 cursor-pointer border border-[#E08A4E]/30">
-        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+        class="flex-1 sm:flex-none flex items-center justify-center gap-2 px-3.5 sm:px-4 py-2.5 bg-gradient-to-r from-amber-600 via-amber-700 to-amber-800 hover:brightness-110 text-white font-black rounded-xl text-xs transition-all duration-300 shadow-lg shadow-amber-950/50 active:scale-95 cursor-pointer border border-amber-500/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true">
           <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"/>
         </svg>
         <span>ახალი ინვოისი</span>
       </button>
 
       <button 
+        type="button"
+        aria-label="მონაცემების განახლება"
         (click)="loadAllOrders()" 
-        class="p-2.5 text-purple-200 hover:text-[#E08A4E] bg-[#1A0F24] hover:bg-[#2A143A] border border-[#3D1A45] hover:border-[#C86D2A]/40 rounded-xl transition-all active:scale-95 shrink-0">
-        <svg class="w-5 h-5" [class.animate-spin]="isLoading()" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+        class="p-2.5 text-amber-200 hover:text-amber-400 bg-[#0a0803] hover:bg-amber-950/60 border border-amber-900/60 hover:border-amber-700/60 rounded-xl transition-all active:scale-95 shrink-0 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-amber-500">
+        <svg class="w-5 h-5" [class.animate-spin]="isLoading()" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
           <path stroke-linecap="round" stroke-linejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
         </svg>
       </button>
@@ -43,9 +46,9 @@
   </div>
 
   @if (isLoading() && orders().length === 0) {
-    <div class="text-center py-16 sm:py-20 text-purple-300/60 font-medium animate-pulse">
-      <div class="inline-block p-4 rounded-full bg-[#1A0F24] border border-[#3D1A45] mb-3 text-[#E08A4E]">
-        <svg class="w-8 h-8 animate-spin" fill="none" viewBox="0 0 24 24">
+    <div class="text-center py-16 sm:py-20 text-amber-200/60 font-medium animate-pulse">
+      <div class="inline-block p-4 rounded-full bg-[#0a0803] border border-amber-900/60 mb-3 text-amber-400 shadow-inner">
+        <svg class="w-8 h-8 animate-spin" fill="none" viewBox="0 0 24 24" aria-hidden="true">
           <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
           <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
         </svg>
@@ -53,63 +56,63 @@
       <div class="text-xs sm:text-sm">მიმდინარეობს 3D შეკვეთების ჩატვირთვა...</div>
     </div>
   } @else if (orders().length === 0) {
-    <div class="text-center py-16 sm:py-20 bg-[#1A0F24]/60 rounded-3xl border border-dashed border-[#3D1A45] backdrop-blur-sm px-4">
-      <div class="p-4 bg-[#231430] rounded-2xl w-fit mx-auto mb-3 border border-[#3D1A45] text-purple-300">
-        <svg class="w-8 h-8" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+    <div class="text-center py-16 sm:py-20 bg-zinc-950/60 rounded-3xl border border-dashed border-amber-900/50 backdrop-blur-sm px-4">
+      <div class="p-4 bg-[#0a0803] rounded-2xl w-fit mx-auto mb-3 border border-amber-900/60 text-amber-400">
+        <svg class="w-8 h-8" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" aria-hidden="true">
           <path stroke-linecap="round" stroke-linejoin="round" d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"/>
         </svg>
       </div>
       <h3 class="text-base sm:text-lg font-bold text-white">3D შეკვეთები ჯერ არ ფიქსირდება</h3>
-      <p class="text-xs text-purple-300/60 mt-1">ახალი შეკვეთები გამოჩნდება ამ ცხრილში</p>
+      <p class="text-xs text-amber-200/60 mt-1">ახალი შეკვეთები გამოჩნდება ამ ცხრილში</p>
     </div>
   } @else {
-    <div class="bg-[#1A0F24]/90 backdrop-blur-md rounded-2xl sm:rounded-[28px] border border-[#3D1A45] shadow-2xl overflow-hidden">
+    <div class="bg-zinc-950/90 backdrop-blur-md rounded-2xl sm:rounded-[28px] border border-amber-900/50 shadow-2xl overflow-hidden">
       <div class="overflow-x-auto min-w-full">
         <table class="w-full text-left border-collapse min-w-[640px]">
           <thead>
-            <tr class="bg-[#0D0712] border-b border-[#3D1A45] text-purple-300/80 text-xs font-bold tracking-wider uppercase">
-              <th class="py-3.5 px-4 sm:px-6">ID</th>
-              <th class="py-3.5 px-4 sm:px-6">მომხმარებელი & 3D ნივთები</th>
-              <th class="py-3.5 px-4 sm:px-6">თარიღი</th>
-              <th class="py-3.5 px-4 sm:px-6">ჯამი</th>
-              <th class="py-3.5 px-4 sm:px-6">სტატუსი</th>
-              <th class="py-3.5 px-4 sm:px-6 text-center">მოქმედება</th>
+            <tr class="bg-[#0a0803] border-b border-amber-900/50 text-amber-200/80 text-xs font-bold tracking-wider uppercase">
+              <th scope="col" class="py-3.5 px-4 sm:px-6">ID</th>
+              <th scope="col" class="py-3.5 px-4 sm:px-6">მომხმარებელი & 3D ნივთები</th>
+              <th scope="col" class="py-3.5 px-4 sm:px-6">თარიღი</th>
+              <th scope="col" class="py-3.5 px-4 sm:px-6">ჯამი</th>
+              <th scope="col" class="py-3.5 px-4 sm:px-6">სტატუსი</th>
+              <th scope="col" class="py-3.5 px-4 sm:px-6 text-center">მოქმედება</th>
             </tr>
           </thead>
-          <tbody class="divide-y divide-[#3D1A45]/50 text-xs sm:text-sm text-purple-100">
+          <tbody class="divide-y divide-amber-900/40 text-xs sm:text-sm text-amber-100">
             @for (order of orders(); track order.id) {
-              <tr class="hover:bg-[#231430]/60 transition-colors duration-150">
-                <td class="py-4 px-4 sm:px-6 font-mono font-bold text-[#E08A4E]">#{{ order.id }}</td>
+              <tr class="hover:bg-amber-950/30 transition-colors duration-150">
+                <td class="py-4 px-4 sm:px-6 font-mono font-bold text-amber-400">#{{ order.id }}</td>
                 
                 <td class="py-4 px-4 sm:px-6">
                   <div class="font-semibold text-white mb-2 flex items-center gap-2">
-                    <span class="w-2 h-2 rounded-full bg-[#E08A4E]"></span>
+                    <span class="w-2 h-2 rounded-full bg-amber-400"></span>
                     {{ order.userEmail }}
                   </div>
                   
                   <div class="flex flex-wrap gap-1.5">
                     @for (item of order.orderItems; track item.id) {
-                      <span class="inline-flex items-center gap-1.5 bg-[#0D0712]/80 text-purple-200 px-2.5 py-1 rounded-xl text-xs font-medium border border-[#3D1A45]">
-                       <span class="font-bold text-[#E08A4E]">
+                      <span class="inline-flex items-center gap-1.5 bg-[#0a0803]/80 text-amber-100 px-2.5 py-1 rounded-xl text-xs font-medium border border-amber-900/50">
+                        <span class="font-bold text-amber-400">
                           {{ item.name || item.productName || item.product?.productName || '3D ნივთი' }} 
                         </span>
-                        <span class="text-purple-400/80 font-mono text-[11px]">x{{ item.quantity }}</span>
+                        <span class="text-amber-300/70 font-mono text-[11px]">x{{ item.quantity }}</span>
                       </span>
                     }
                   </div>
                 </td>
 
-                <td class="py-4 px-4 sm:px-6 text-purple-300/70 text-xs font-mono whitespace-nowrap">
+                <td class="py-4 px-4 sm:px-6 text-amber-200/70 text-xs font-mono whitespace-nowrap">
                   {{ order.createdAt | date:'dd.MM.yyyy HH:mm' }}
                 </td>
                 
-                <td class="py-4 px-4 sm:px-6 font-black text-[#E08A4E] font-mono text-sm sm:text-base whitespace-nowrap">
+                <td class="py-4 px-4 sm:px-6 font-black text-amber-400 font-mono text-sm sm:text-base whitespace-nowrap">
                   {{ currencyService.formatPrice(order.totalAmount) }}
                 </td>
 
                 <td class="py-4 px-4 sm:px-6 whitespace-nowrap">
                   <span [ngClass]="{
-                    'bg-[#6B1124]/40 text-[#E08A4E] border-[#C86D2A]/40': order.status === 'PENDING',
+                    'bg-amber-500/10 text-amber-400 border-amber-500/30': order.status === 'PENDING',
                     'bg-emerald-950/50 text-emerald-300 border-emerald-500/30': order.status === 'PAID',
                     'bg-sky-950/50 text-sky-300 border-sky-500/30': order.status === 'SHIPPED',
                     'bg-rose-950/50 text-rose-300 border-rose-500/30': order.status === 'CANCELLED'
@@ -124,21 +127,22 @@
                       type="button"
                       (click)="printOrderInvoice(order)" 
                       title="ინვოისის დაბეჭდვა"
-                      class="flex items-center gap-1.5 px-3 py-1.5 bg-[#6B1124]/40 hover:bg-[#6B1124]/70 text-[#E08A4E] border border-[#C86D2A]/40 rounded-xl transition-all active:scale-95 text-xs font-bold shrink-0 cursor-pointer">
-                      <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                      class="flex items-center gap-1.5 px-3 py-1.5 bg-amber-500/10 hover:bg-amber-500/20 text-amber-400 border border-amber-500/30 rounded-xl transition-all active:scale-95 text-xs font-bold shrink-0 cursor-pointer focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-amber-500">
+                      <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"/>
                       </svg>
                       <span>ინვოისი</span>
                     </button>
 
                     <select 
+                      aria-label="სტატუსის შეცვლა"
                       (change)="onStatusChange(order.id, $event)"
                       [value]="order.status"
-                      class="bg-[#0D0712] border border-[#3D1A45] text-purple-100 text-xs font-bold rounded-xl px-2.5 py-1.5 focus:outline-none focus:border-[#C86D2A] transition-all cursor-pointer">
-                      <option value="PENDING" class="bg-[#1A0F24] text-[#E08A4E]">მიმდინარე</option>
-                      <option value="PAID" class="bg-[#1A0F24] text-emerald-400">გადახდილი</option>
-                      <option value="SHIPPED" class="bg-[#1A0F24] text-sky-400">გზაში</option>
-                      <option value="CANCELLED" class="bg-[#1A0F24] text-rose-400">გაუქმებული</option>
+                      class="bg-[#0a0803] border border-amber-900/60 text-amber-100 text-xs font-bold rounded-xl px-2.5 py-1.5 focus:outline-none focus:border-amber-500 transition-all cursor-pointer">
+                      <option value="PENDING" class="bg-zinc-950 text-amber-400">მიმდინარე</option>
+                      <option value="PAID" class="bg-zinc-950 text-emerald-400">გადახდილი</option>
+                      <option value="SHIPPED" class="bg-zinc-950 text-sky-400">გზაში</option>
+                      <option value="CANCELLED" class="bg-zinc-950 text-rose-400">გაუქმებული</option>
                     </select>
                   </div>
                 </td>
@@ -153,15 +157,19 @@
 
 @if (isModalOpen()) {
   <div class="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-black/85 backdrop-blur-md animate-fadeIn">
-    <div class="bg-[#1A0F24] border border-[#3D1A45] w-full max-w-2xl rounded-2xl sm:rounded-3xl p-4 sm:p-6 shadow-2xl relative text-purple-100 max-h-[92vh] flex flex-col">
+    <div class="bg-zinc-950 border border-amber-900/60 w-full max-w-2xl rounded-2xl sm:rounded-3xl p-4 sm:p-6 shadow-2xl relative text-amber-100 max-h-[92vh] flex flex-col">
       
-      <div class="flex items-center justify-between border-b border-[#3D1A45] pb-3.5 mb-4 shrink-0">
+      <div class="flex items-center justify-between border-b border-amber-900/50 pb-3.5 mb-4 shrink-0">
         <h3 class="text-base sm:text-lg font-bold text-white flex items-center gap-2">
-          <span class="w-2.5 h-2.5 rounded-full bg-[#E08A4E]"></span>
+          <span class="w-2.5 h-2.5 rounded-full bg-amber-400"></span>
           ახალი ინვოისის შექმნა
         </h3>
-        <button (click)="closeCreateModal()" class="text-purple-300/60 hover:text-white transition-colors cursor-pointer p-1">
-          <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+        <button 
+          type="button"
+          aria-label="დახურვა"
+          (click)="closeCreateModal()" 
+          class="text-amber-200/60 hover:text-white transition-colors cursor-pointer p-1 rounded-lg focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-amber-500">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
             <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
           </svg>
         </button>
@@ -169,82 +177,93 @@
 
       <div class="space-y-4 overflow-y-auto pr-1 sm:pr-2 flex-1">
         <div>
-          <label class="block text-xs font-bold text-purple-200 mb-1.5">მომხმარებელი (Email / ტელეფონი) *</label>
+          <label for="userEmail" class="block text-xs font-bold text-amber-200 mb-1.5">მომხმარებელი (Email / ტელეფონი) *</label>
           <input 
+            id="userEmail"
             type="text" 
             [(ngModel)]="newOrderData().userEmail" 
             placeholder="მაგ: client@gmail.com ან 599123456"
-            class="w-full bg-[#0D0712] border border-[#3D1A45] rounded-xl px-3.5 py-2.5 text-xs text-white focus:outline-none focus:border-[#C86D2A] transition-all placeholder:text-purple-300/40" />
+            class="w-full bg-[#0a0803] border border-amber-900/60 rounded-xl px-3.5 py-2.5 text-xs text-white focus:outline-none focus:border-amber-500 transition-all placeholder:text-amber-200/30" />
         </div>
 
         <!-- 🆕 კომპანიის მონაცემების სექცია -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 p-3 bg-[#0D0712]/50 border border-[#3D1A45]/80 rounded-xl">
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 p-3 bg-[#0a0803]/60 border border-amber-900/50 rounded-xl">
           <div class="sm:col-span-1">
-            <label class="block text-[11px] font-bold text-purple-300/80 mb-1">კომპანიის დასახელება</label>
+            <label for="companyName" class="block text-[11px] font-bold text-amber-200/80 mb-1">კომპანიის დასახელება</label>
             <input 
+              id="companyName"
               type="text" 
               [(ngModel)]="newOrderData().companyName" 
               placeholder="შპს 3D სტუდიო"
-              class="w-full bg-[#1A0F24] border border-[#3D1A45] rounded-lg px-3 py-1.5 text-xs text-white focus:outline-none focus:border-[#C86D2A] placeholder:text-purple-300/30" />
+              class="w-full bg-zinc-950 border border-amber-900/60 rounded-lg px-3 py-1.5 text-xs text-white focus:outline-none focus:border-amber-500 placeholder:text-amber-200/30" />
           </div>
 
           <div class="sm:col-span-1">
-            <label class="block text-[11px] font-bold text-purple-300/80 mb-1">საიდენტიფიკაციო კოდი (ს/კ)</label>
+            <label for="taxId" class="block text-[11px] font-bold text-amber-200/80 mb-1">საიდენტიფიკაციო კოდი (ს/კ)</label>
             <input 
+              id="taxId"
               type="text" 
               [(ngModel)]="newOrderData().taxId" 
               placeholder="400123456"
-              class="w-full bg-[#1A0F24] border border-[#3D1A45] rounded-lg px-3 py-1.5 text-xs text-white focus:outline-none focus:border-[#C86D2A] placeholder:text-purple-300/30" />
+              class="w-full bg-zinc-950 border border-amber-900/60 rounded-lg px-3 py-1.5 text-xs text-white focus:outline-none focus:border-amber-500 placeholder:text-amber-200/30" />
           </div>
 
           <div class="sm:col-span-2">
-            <label class="block text-[11px] font-bold text-purple-300/80 mb-1">იურიდიული მისამართი</label>
+            <label for="companyAddress" class="block text-[11px] font-bold text-amber-200/80 mb-1">იურიდიული მისამართი</label>
             <input 
+              id="companyAddress"
               type="text" 
               [(ngModel)]="newOrderData().companyAddress" 
               placeholder="ქ. თბილისი, რუსთაველის გამზ. #1"
-              class="w-full bg-[#1A0F24] border border-[#3D1A45] rounded-lg px-3 py-1.5 text-xs text-white focus:outline-none focus:border-[#C86D2A] placeholder:text-purple-300/30" />
+              class="w-full bg-zinc-950 border border-amber-900/60 rounded-lg px-3 py-1.5 text-xs text-white focus:outline-none focus:border-amber-500 placeholder:text-amber-200/30" />
           </div>
         </div>
 
         <div>
           <div class="flex items-center justify-between mb-2">
-            <label class="text-xs font-bold text-purple-200">3D ნივთები / პროდუქტები</label>
+            <label class="text-xs font-bold text-amber-200">3D ნივთები / პროდუქტები</label>
             <button 
               (click)="addItemRow()" 
               type="button"
-              class="text-xs text-[#E08A4E] hover:underline font-bold cursor-pointer">
+              class="text-xs text-amber-400 hover:underline font-bold cursor-pointer focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-amber-500">
               + ნივთის დამატება
             </button>
           </div>
 
           <div class="space-y-2.5">
             @for (item of newOrderData().items; track $index) {
-              <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 bg-[#0D0712]/80 p-2.5 rounded-xl border border-[#3D1A45]">
+              <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 bg-[#0a0803]/80 p-2.5 rounded-xl border border-amber-900/50">
                 <input 
                   type="text" 
+                  [aria-label]="'პროდუქტის დასახელება #' + ($index + 1)"
                   [(ngModel)]="item.productName" 
                   placeholder="პროდუქტის დასახელება"
-                  class="flex-1 bg-[#1A0F24] border border-[#3D1A45] rounded-lg px-3 py-1.5 text-xs text-white focus:outline-none focus:border-[#C86D2A] placeholder:text-purple-300/40" />
+                  class="flex-1 bg-zinc-950 border border-amber-900/60 rounded-lg px-3 py-1.5 text-xs text-white focus:outline-none focus:border-amber-500 placeholder:text-amber-200/30" />
                 
                 <div class="flex items-center gap-2 justify-between">
                   <input 
                     type="number" 
+                    [aria-label]="'რაოდენობა #' + ($index + 1)"
                     [(ngModel)]="item.quantity" 
                     min="1" 
                     placeholder="რაოდ."
-                    class="w-20 sm:w-16 bg-[#1A0F24] border border-[#3D1A45] rounded-lg px-2 py-1.5 text-xs text-center text-white focus:outline-none focus:border-[#C86D2A]" />
+                    class="w-20 sm:w-16 bg-zinc-950 border border-amber-900/60 rounded-lg px-2 py-1.5 text-xs text-center text-white focus:outline-none focus:border-amber-500" />
 
                   <input 
                     type="number" 
+                    [aria-label]="'ფასი #' + ($index + 1)"
                     [(ngModel)]="item.price" 
                     min="0" 
                     placeholder="ფასი (₾)"
-                    class="w-28 sm:w-24 bg-[#1A0F24] border border-[#3D1A45] rounded-lg px-2 py-1.5 text-xs text-center text-[#E08A4E] font-bold focus:outline-none focus:border-[#C86D2A]" />
+                    class="w-28 sm:w-24 bg-zinc-950 border border-amber-900/60 rounded-lg px-2 py-1.5 text-xs text-center text-amber-400 font-bold focus:outline-none focus:border-amber-500" />
 
                   @if (newOrderData().items.length > 1) {
-                    <button (click)="removeItemRow($index)" class="text-rose-400 hover:text-rose-300 p-1 cursor-pointer shrink-0">
-                      <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <button 
+                      type="button"
+                      [aria-label]="'წაშლა #' + ($index + 1)"
+                      (click)="removeItemRow($index)" 
+                      class="text-rose-400 hover:text-rose-300 hover:bg-rose-500/10 p-1.5 rounded-lg transition-colors cursor-pointer shrink-0 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-rose-500">
+                      <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
                       </svg>
                     </button>
@@ -255,22 +274,24 @@
           </div>
         </div>
 
-        <div class="pt-3 border-t border-[#3D1A45] flex justify-between items-center">
-          <span class="text-xs text-purple-200 font-bold">სულ ჯამური ღირებულება:</span>
-          <span class="text-base sm:text-lg font-black text-[#E08A4E] font-mono">{{ calculateTotal() }} GEL</span>
+        <div class="pt-3 border-t border-amber-900/50 flex justify-between items-center">
+          <span class="text-xs text-amber-200 font-bold">სულ ჯამური ღირებულება:</span>
+          <span class="text-base sm:text-lg font-black text-amber-400 font-mono">{{ calculateTotal() }} GEL</span>
         </div>
 
       </div>
 
-      <div class="flex items-center justify-end gap-2.5 sm:gap-3 mt-4 pt-3.5 border-t border-[#3D1A45] shrink-0">
+      <div class="flex items-center justify-end gap-2.5 sm:gap-3 mt-4 pt-3.5 border-t border-amber-900/50 shrink-0">
         <button 
+          type="button"
           (click)="closeCreateModal()"
-          class="px-3.5 sm:px-4 py-2 bg-[#231430] hover:bg-[#3D1A45] text-purple-200 font-bold text-xs rounded-xl transition-all cursor-pointer">
+          class="px-3.5 sm:px-4 py-2 bg-amber-950/60 hover:bg-amber-900/50 text-amber-200 font-bold text-xs rounded-xl border border-amber-800/40 hover:border-amber-500/50 transition-all cursor-pointer focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-amber-500">
           გაუქმება
         </button>
         <button 
+          type="button"
           (click)="submitManualOrder()"
-          class="px-4 sm:px-5 py-2 bg-gradient-to-r from-[#C86D2A] to-[#B45309] hover:from-[#D97706] hover:to-[#C86D2A] text-white font-black text-xs rounded-xl transition-all active:scale-95 cursor-pointer shadow-md shadow-[#C86D2A]/20">
+          class="px-4 sm:px-5 py-2 bg-gradient-to-r from-amber-600 via-amber-700 to-amber-800 hover:brightness-110 text-white font-black text-xs rounded-xl transition-all duration-300 active:scale-95 cursor-pointer shadow-md shadow-amber-950/50 border border-amber-500/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500">
           შენახვა & ინვოისი
         </button>
       </div>
