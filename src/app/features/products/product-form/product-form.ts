@@ -1,7 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { Router, RouterLink } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { ProductService } from '../../../core/services/product';
 import { ToastService } from '../../../core/services/toast';
 
@@ -14,9 +14,12 @@ export class ProductFormComponent {
   private readonly fb = inject(FormBuilder);
   private readonly productService = inject(ProductService);
   private readonly router = inject(Router);
+  private readonly route = inject(ActivatedRoute);
   private readonly toastService = inject(ToastService);
 
+  public readonly productId = Number(this.route.snapshot.paramMap.get('id')) || null;
   public coverFile: File | null = null;
+  public existingCoverImage: string | null = null;
   public carouselFiles: File[] = [];
 
   public readonly productForm = this.fb.nonNullable.group({
@@ -24,6 +27,26 @@ export class ProductFormComponent {
     price: [0, [Validators.required, Validators.min(0.1)]],
     description: ['', [Validators.required, Validators.maxLength(500)]]
   });
+
+  constructor() {
+    if (this.productId !== null) {
+      this.productService.getProductById(this.productId).subscribe({
+        next: (product) => {
+          this.productForm.patchValue({
+            productName: product.productName,
+            price: product.price,
+            description: product.description,
+          });
+          this.existingCoverImage = product.coverImage ?? null;
+        },
+        error: (err) => {
+          console.error(err);
+          this.toastService.show('პროდუქტის ჩატვირთვა ვერ მოხერხდა', 'danger');
+          this.router.navigate(['/']);
+        },
+      });
+    }
+  }
 
   public onCoverSelected(event: Event): void {
     const input = event.target as HTMLInputElement;
@@ -51,14 +74,29 @@ export class ProductFormComponent {
   }
 
   public onSubmit(): void {
-    if (this.productForm.valid && this.coverFile) {
-      this.productService.addProductWithImages(
-        this.productForm.value, 
-        this.coverFile,
-        this.carouselFiles
-      ).subscribe({
+    if (this.productForm.invalid || (this.productId === null && !this.coverFile)) {
+      return;
+    }
+
+    const saveRequest = this.productId === null
+      ? this.productService.addProductWithImages(
+          this.productForm.getRawValue(),
+          this.coverFile!,
+          this.carouselFiles
+        )
+      : this.productService.updateProductWithImages(
+          this.productId,
+          this.productForm.getRawValue(),
+          this.coverFile,
+          this.carouselFiles
+        );
+
+    saveRequest.subscribe({
         next: () => {
-          this.toastService.show('პროდუქტი წარმატებით დაემატა!', 'success');
+          this.toastService.show(
+            this.productId === null ? 'პროდუქტი წარმატებით დაემატა!' : 'პროდუქტი წარმატებით განახლდა!',
+            'success'
+          );
           this.productService.getAllProducts();
           this.router.navigate(['/']);
         },
@@ -67,6 +105,5 @@ export class ProductFormComponent {
           this.toastService.show('შეცდომა პროდუქტის დამატებისას', 'danger');
         }
       });
-    }
   }
 }

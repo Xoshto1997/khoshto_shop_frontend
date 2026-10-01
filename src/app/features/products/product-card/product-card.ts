@@ -6,6 +6,7 @@ import { Product } from '../../../models/product.model';
 import { CurrencyService } from '../../../core/services/currency-service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { CartService } from '../../../core/services/cart-service';
+import { AuthService } from '../../../core/services/auth';
 
 @Component({
   selector: 'app-product-card',
@@ -17,6 +18,7 @@ export class ProductCard {
   public readonly product = input.required<Product>();
   public readonly productService = inject(ProductService);
   public readonly currencyService = inject(CurrencyService);
+  public readonly authService = inject(AuthService);
   private readonly cartService = inject(CartService);
   private readonly destroyRef = inject(DestroyRef);
 
@@ -38,6 +40,14 @@ export class ProductCard {
         });
     } else {
       alert('პროდუქტის იდენტიფიკატორი არასწორია.');
+    }
+  }
+
+  public deleteProduct(): void {
+    const productId = this.product().id;
+
+    if (this.authService.isAdmin() && productId !== undefined && window.confirm('ნამდვილად გსურთ პროდუქტის წაშლა?')) {
+      this.productService.deleteProduct(productId);
     }
   }
 }

@@ -135,6 +135,55 @@
           <app-product-card [product]="prod" class="block hover:-translate-y-1 transition-transform duration-300"></app-product-card>
         }
       </div>
+
+      @if (totalPages() > 1) {
+        <div class="flex items-center justify-center gap-2 mt-12 pt-6 border-t border-amber-900/40">
+          
+          <!-- წინა გვერდი -->
+          <button 
+            type="button"
+            [disabled]="currentPage() === 0"
+            (click)="onPageChange(currentPage() - 1)"
+            class="px-3.5 py-2 rounded-xl text-xs font-bold border border-amber-900/50 bg-black/60 text-amber-100 hover:bg-amber-900/30 disabled:opacity-40 disabled:cursor-not-allowed transition-all flex items-center gap-1">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5"/>
+            </svg>
+            <span>წინა</span>
+          </button>
+
+          <!-- გვერდების ციფრები: 1, 2, 3... -->
+          <div class="flex items-center gap-1.5 mx-2">
+            @for (page of [].constructor(totalPages()); let i = $index; track i) {
+              <button 
+                type="button"
+                (click)="onPageChange(i)"
+                [class.bg-amber-500]="i === currentPage()"
+                [class.text-black]="i === currentPage()"
+                [class.font-black]="i === currentPage()"
+                [class.border-amber-400]="i === currentPage()"
+                [class.bg-black\/60]="i !== currentPage()"
+                [class.text-zinc-300]="i !== currentPage()"
+                [class.border-amber-900\/40]="i !== currentPage()"
+                class="w-9 h-9 rounded-xl text-xs border hover:border-amber-500/60 transition-all flex items-center justify-center">
+                {{ i + 1 }}
+              </button>
+            }
+          </div>
+
+          <!-- შემდეგი გვერდი -->
+          <button 
+            type="button"
+            [disabled]="currentPage() === totalPages() - 1"
+            (click)="onPageChange(currentPage() + 1)"
+            class="px-3.5 py-2 rounded-xl text-xs font-bold border border-amber-900/50 bg-black/60 text-amber-100 hover:bg-amber-900/30 disabled:opacity-40 disabled:cursor-not-allowed transition-all flex items-center gap-1">
+            <span>შემდეგი</span>
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5"/>
+            </svg>
+          </button>
+
+        </div>
+      }
     }
   </div>
 

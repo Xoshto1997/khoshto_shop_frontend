@@ -8,6 +8,7 @@ import { DirectOrderRequest, ManualOrderData, Order, OrderItemRequest, OrderStat
 
 @Service()
 export class OrderService {
+  
   private readonly http = inject(HttpClient);
   private readonly apiUrl = `${environment.apiUrl}/orders`;
 
@@ -50,7 +51,9 @@ export class OrderService {
     );
   }
 
-    public getOrdersByUserEmail(email: string): Observable<Order[]> {
+  public getOrdersByUserEmail(email: string): Observable<Order[]> {
     return this.http.get<Order[]>(`${this.apiUrl}/user/${email}`);
   }
+
+  
 }

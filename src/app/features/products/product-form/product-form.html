@@ -14,7 +14,9 @@
     <div class="mt-4 flex items-center gap-2">
       <span class="text-[10px] uppercase tracking-widest font-extrabold text-amber-400 bg-amber-950/50 px-2.5 py-0.5 rounded border border-amber-800/30">Creator Panel</span>
     </div>
-    <h2 class="text-2xl font-black text-white tracking-tight mt-1">ახალი პროდუქტის დამატება</h2>
+    <h2 class="text-2xl font-black text-white tracking-tight mt-1">
+      {{ productId === null ? 'ახალი პროდუქტის დამატება' : 'პროდუქტის განახლება' }}
+    </h2>
   </div>
 
   <form [formGroup]="productForm" (ngSubmit)="onSubmit()" class="space-y-6 relative z-10">
@@ -60,9 +62,15 @@
               <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 001.5-1.5V6a1.5 1.5 0 00-1.5-1.5H3.75A1.5 1.5 0 002.25 6v12a1.5 1.5 0 001.5 1.5zm10.5-11.25h.008v.008h-.008V8.25zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z"/>
             </svg>
           </div>
-          <span class="text-xs font-bold text-zinc-400 group-hover/upload:text-amber-400 transition-colors">აირჩიეთ მთავარი ფოტო</span>
+          <span class="text-xs font-bold text-zinc-400 group-hover/upload:text-amber-400 transition-colors">
+            {{ existingCoverImage && !coverFile ? 'შეინარჩუნეთ ან შეცვალეთ მთავარი ფოტო' : 'აირჩიეთ მთავარი ფოტო' }}
+          </span>
           <input type="file" (change)="onCoverSelected($event)" class="hidden" accept="image/*"/>
         </label>
+
+        @if (existingCoverImage && !coverFile) {
+          <img [src]="existingCoverImage" alt="მიმდინარე პროდუქტის ფოტო" class="h-20 w-20 object-cover rounded-lg mx-auto mt-3" />
+        }
         
         @if (coverFile) {
           <div class="inline-flex items-center gap-2 bg-amber-950/50 border border-amber-800/40 text-amber-300 text-[11px] font-bold px-3 py-1.5 rounded-xl mt-3">
@@ -101,10 +109,10 @@
       }
     </div>
 
-    <button type="submit" 
-            [disabled]="productForm.invalid || !coverFile" 
+        <button type="submit" 
+          [disabled]="productForm.invalid || (productId === null && !coverFile)" 
             class="w-full bg-gradient-to-r from-amber-600 via-amber-700 to-amber-800 hover:from-amber-500 hover:to-amber-700 text-white font-black py-4 px-4 rounded-2xl shadow-lg shadow-amber-950/50 transition-all duration-300 text-sm flex justify-center items-center gap-2 active:scale-[0.98] mt-4 border border-amber-500/40 disabled:bg-zinc-800 disabled:from-zinc-800 disabled:to-zinc-800 disabled:text-zinc-600 disabled:border-transparent disabled:shadow-none cursor-pointer disabled:cursor-not-allowed">
-      <span>პროდუქტის შენახვა</span>
+      <span>{{ productId === null ? 'პროდუქტის შენახვა' : 'ცვლილებების შენახვა' }}</span>
     </button>
   </form>
 </div>

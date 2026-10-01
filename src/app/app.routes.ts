@@ -35,6 +35,11 @@ export const routes: Routes = [
     canActivate: [adminGuard],
   },
   {
+    path: 'edit-product/:id',
+    loadComponent: () => import('./features/products/product-form/product-form').then((c) => c.ProductFormComponent),
+    canActivate: [adminGuard],
+  },
+  {
     path: 'admin/orders',
     loadComponent: () => import('./admin/admin-orders/admin-orders').then((c) => c.AdminOrders),
     canActivate: [adminGuard],

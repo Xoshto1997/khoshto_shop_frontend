@@ -18,6 +18,14 @@ export class AdminOrders implements OnInit {
   public readonly isLoading = signal<boolean>(false);
   public readonly isModalOpen = signal<boolean>(false);
 
+  // 🔍 Filter & Search Signals
+  public readonly searchQuery = signal<string>('');
+  public readonly selectedStatus = signal<string>('ALL');
+
+  // 📄 Pagination Signals
+  public readonly currentPage = signal<number>(1);
+  public readonly pageSize = signal<number>(10);
+
   public readonly newOrderData = signal<ManualOrderData>({
     userEmail: '',
     companyName: '',
@@ -31,6 +39,48 @@ export class AdminOrders implements OnInit {
       (sum, item) => sum + (item.quantity || 0) * (item.price || 0),
       0,
     );
+  });
+
+  // 🔎 Filtered Orders Computed Signal
+  public readonly filteredOrders = computed(() => {
+    const query = this.searchQuery().toLowerCase().trim();
+    const status = this.selectedStatus();
+    const allOrders = this.orders();
+
+    return allOrders.filter((order) => {
+      // Status Filter
+      const matchesStatus = status === 'ALL' || order.status === status;
+
+      // Search Filter (ID, Email, Company, TaxID, Items)
+      const matchesSearch =
+        !query ||
+        order.id.toString().includes(query) ||
+        order.userEmail?.toLowerCase().includes(query) ||
+        order.companyName?.toLowerCase().includes(query) ||
+        order.taxId?.toLowerCase().includes(query) ||
+        order.orderItems?.some((item) => {
+          const name = item.name || item.productName || item.product?.productName || '';
+          return name.toLowerCase().includes(query);
+        });
+
+      return matchesStatus && matchesSearch;
+    });
+  });
+
+  // 📄 Paginated Orders Computed Signal
+  public readonly paginatedOrders = computed(() => {
+    const filtered = this.filteredOrders();
+    const page = this.currentPage();
+    const size = this.pageSize();
+
+    const startIndex = (page - 1) * size;
+    return filtered.slice(startIndex, startIndex + size);
+  });
+
+  // 📊 Pagination Meta Info
+  public readonly totalPages = computed(() => {
+    const total = this.filteredOrders().length;
+    return Math.ceil(total / this.pageSize()) || 1;
   });
 
   ngOnInit(): void {
@@ -49,6 +99,29 @@ export class AdminOrders implements OnInit {
         this.isLoading.set(false);
       },
     });
+  }
+
+  // 🔍 Handlers for Search & Filter
+  public onSearchChange(query: string): void {
+    this.searchQuery.set(query);
+    this.currentPage.set(1); // Reset to page 1 on filter
+  }
+
+  public onStatusFilterChange(status: string): void {
+    this.selectedStatus.set(status);
+    this.currentPage.set(1); // Reset to page 1 on filter
+  }
+
+  // 📄 Pagination Handlers
+  public goToPage(page: number): void {
+    if (page >= 1 && page <= this.totalPages()) {
+      this.currentPage.set(page);
+    }
+  }
+
+  public onPageSizeChange(size: number): void {
+    this.pageSize.set(Number(size));
+    this.currentPage.set(1);
   }
 
   public onStatusChange(orderId: number, event: Event): void {
@@ -88,7 +161,7 @@ export class AdminOrders implements OnInit {
     const itemsHtml = order.orderItems
       ? order.orderItems
           .map((item) => {
-            const productName = item.productName || item.product?.productName || '3D პროდუქტი';
+            const productName = item.productName || item.product?.productName || item.name || '3D პროდუქტი';
             const price = item.price ?? item.product?.price ?? 0;
             const quantity = item.quantity || 1;
             const totalItemPrice = quantity * price;
