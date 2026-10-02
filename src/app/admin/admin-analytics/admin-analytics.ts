@@ -70,7 +70,7 @@ export class AdminAnalytics implements OnInit {
   }
 
   fetchAnalytics(): void {
-    this.http.get<DashboardStats>('http://localhost:8090/api/admin/analytics/dashboard')
+    this.http.get<DashboardStats>('https://3dstudio.ge/api/admin/analytics/dashboard')
       .subscribe({
         next: (data) => {
           this.stats.set(data);

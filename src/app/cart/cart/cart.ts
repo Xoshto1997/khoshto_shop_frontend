@@ -1,19 +1,22 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Router } from '@angular/router';
-import { FormsModule } from '@angular/forms';
+import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { firstValueFrom } from 'rxjs';
 
 import { CartService } from '../../core/services/cart-service';
 import { CurrencyService } from '../../core/services/currency-service';
 import { AuthService } from '../../core/services/auth';
 import { OrderService } from '../../core/services/order-service';
-import { OrderItemRequest } from '../../models/order.model';
+import { DirectOrderRequest, OrderItemRequest, PaymentMethod } from '../../models/order.model';
 import { CartItem } from '../../models/cart.model'; 
+import { ToastService } from '../../core/services/toast';
+
+type CheckoutPaymentOption = PaymentMethod | 'MESSENGER';
 
 @Component({
   selector: 'app-cart',
-  imports: [CommonModule, RouterModule, FormsModule],
+  imports: [CommonModule, RouterModule, ReactiveFormsModule],
   templateUrl: './cart.html'
 })
 export class Cart implements OnInit {
@@ -22,12 +25,26 @@ export class Cart implements OnInit {
   private readonly orderService = inject(OrderService);
   private readonly authService = inject(AuthService);
   private readonly router = inject(Router);
+  private readonly formBuilder = inject(FormBuilder);
+  private readonly toastService = inject(ToastService);
 
   public isLoading = signal<boolean>(false);
-  public selectedPaymentMethod = signal<'BANK_TRANSFER' | 'CASH_ON_DELIVERY'>('BANK_TRANSFER');
+  public readonly checkoutForm = this.formBuilder.nonNullable.group({
+    customerName: ['', Validators.required],
+    phoneNumber: ['', [Validators.required, Validators.pattern(/^\+?[0-9][0-9\s()-]{6,18}[0-9]$/)]],
+    city: ['', Validators.required],
+    address: ['', Validators.required],
+    notes: [''],
+    paymentMethod: this.formBuilder.nonNullable.control<CheckoutPaymentOption>('BANK_TRANSFER', Validators.required),
+    userEmail: [this.authService.currentUserEmail() ?? '', [Validators.required, Validators.email]],
+  });
 
   ngOnInit(): void {
     this.cartService.loadCart();
+    const email = this.authService.currentUserEmail();
+    if (email) {
+      this.checkoutForm.controls.userEmail.setValue(email);
+    }
   }
 
   public increaseQuantity(productId: number, currentQty: number): void {
@@ -54,16 +71,28 @@ export class Cart implements OnInit {
 
   public async onCheckout(): Promise<void> {
     const email = this.authService.currentUserEmail() as string | null;
+
+    if (this.checkoutForm.invalid) {
+      this.checkoutForm.markAllAsTouched();
+      return;
+    }
+
+    const formValue = this.checkoutForm.getRawValue();
+
+    if (formValue.paymentMethod === 'MESSENGER') {
+      window.open('https://m.me/61587657993668', '_blank', 'noopener,noreferrer');
+      return;
+    }
     
     if (!email) {
-      alert('გთხოვთ გაიაროთ ავტორიზაცია ყიდვამდე!');
+      this.toastService.show('გთხოვთ გაიაროთ ავტორიზაცია ყიდვამდე!', 'danger');
       return;
     }
 
     const currentCart = this.cartService.cart();
 
     if (!currentCart || !currentCart.items || currentCart.items.length === 0) {
-      alert('კალათა ცარიელია!');
+      this.toastService.show('კალათა ცარიელია!', 'info');
       return;
     }
 
@@ -76,9 +105,12 @@ export class Cart implements OnInit {
       price: item.product.price
     }));
 
-    const checkoutData = {
-      userEmail: email,
-      paymentMethod: this.selectedPaymentMethod(),
+    const paymentMethod: PaymentMethod = formValue.paymentMethod === 'CASH_ON_DELIVERY'
+      ? 'CASH_ON_DELIVERY'
+      : 'BANK_TRANSFER';
+    const checkoutData: DirectOrderRequest = {
+      ...formValue,
+      paymentMethod,
       items: orderItems
     };
 
@@ -94,13 +126,13 @@ export class Cart implements OnInit {
       this.router.navigate(['/order-success'], { 
         queryParams: { 
           orderId: createdOrder.id, 
-          method: this.selectedPaymentMethod() 
+          method: formValue.paymentMethod
         } 
       });
 
     } catch (error) {
       console.error('შეკვეთის შექმნა ჩავარდა:', error);
-      alert('სისტემური შეცდომა, გთხოვთ სცადოთ მოგვიანებით.');
+      this.toastService.show('სისტემური შეცდომა, გთხოვთ სცადოთ მოგვიანებით.', 'danger');
     } finally {
       this.isLoading.set(false);
     }

@@ -2,7 +2,7 @@ import { inject, Service } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { firstValueFrom, Observable } from 'rxjs';
 import { environment } from '../../../environments/environment';
-import { DirectOrderRequest, ManualOrderData, Order, OrderItemRequest, OrderStatus } from '../../models/order.model';
+import { AdminOrderResponse, DirectOrderRequest, ManualOrderData, Order, OrderItemRequest, OrderStatus } from '../../models/order.model';
 
 
 
@@ -26,8 +26,8 @@ export class OrderService {
     return this.http.post<Order>(`${this.apiUrl}/admin/create-manual`, orderData);
   }
 
-  public getAllOrders(): Observable<Order[]> {
-    return this.http.get<Order[]>(`${this.apiUrl}/admin/all`);
+  public getAllOrders(): Observable<AdminOrderResponse[]> {
+    return this.http.get<AdminOrderResponse[]>(`${this.apiUrl}/admin/all`);
   }
 
   public createDirectOrder(data: DirectOrderRequest): Observable<Order> {

@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angula
 import { AuthService } from '../../../core/services/auth';
 import { Router, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { ToastService } from '../../../core/services/toast';
 
 @Component({
   selector: 'app-register',
@@ -13,6 +14,7 @@ export class Register {
   private fb = inject(FormBuilder);
   private authService = inject(AuthService);
   private router = inject(Router);
+  private readonly toastService = inject(ToastService);
 
   errorMessage = signal<string | null>(null);
   isLoading = signal<boolean>(false);
@@ -35,9 +37,9 @@ export class Register {
     this.isLoading.set(true);
 
     this.authService.register(this.registerForm.value).subscribe({
-      next: (response) => {
+      next: () => {
         this.isLoading.set(false);
-        alert('რეგისტრაცია წარმატებით დასრულდა! ახლა შეგიძლიათ შეხვიდეთ.');
+        this.toastService.show('რეგისტრაცია წარმატებით დასრულდა! ახლა შეგიძლიათ შეხვიდეთ.', 'success');
         this.router.navigate(['/login']);
       },
       error: (err) => {

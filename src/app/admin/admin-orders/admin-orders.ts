@@ -2,8 +2,9 @@ import { Component, inject, OnInit, signal, computed } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { OrderService } from '../../core/services/order-service';
-import { DirectOrderRequest, ManualOrderData, Order, OrderStatus } from '../../models/order.model';
+import { AdminOrderResponse, ManualOrderData, Order, OrderStatus } from '../../models/order.model';
 import { CurrencyService } from '../../core/services/currency-service';
+import { ToastService } from '../../core/services/toast';
 
 @Component({
   selector: 'app-admin-orders',
@@ -13,8 +14,9 @@ import { CurrencyService } from '../../core/services/currency-service';
 export class AdminOrders implements OnInit {
   private readonly orderService = inject(OrderService);
   public readonly currencyService = inject(CurrencyService);
+  private readonly toastService = inject(ToastService);
 
-  public readonly orders = signal<Order[]>([]);
+  public readonly orders = signal<AdminOrderResponse[]>([]);
   public readonly isLoading = signal<boolean>(false);
   public readonly isModalOpen = signal<boolean>(false);
 
@@ -56,6 +58,10 @@ export class AdminOrders implements OnInit {
         !query ||
         order.id.toString().includes(query) ||
         order.userEmail?.toLowerCase().includes(query) ||
+        order.customerName?.toLowerCase().includes(query) ||
+        order.phoneNumber?.toLowerCase().includes(query) ||
+        order.city?.toLowerCase().includes(query) ||
+        order.address?.toLowerCase().includes(query) ||
         order.companyName?.toLowerCase().includes(query) ||
         order.taxId?.toLowerCase().includes(query) ||
         order.orderItems?.some((item) => {
@@ -90,7 +96,7 @@ export class AdminOrders implements OnInit {
   public loadAllOrders(): void {
     this.isLoading.set(true);
     this.orderService.getAllOrders().subscribe({
-      next: (data: Order[]) => {
+      next: (data: AdminOrderResponse[]) => {
         this.orders.set(data || []);
         this.isLoading.set(false);
       },
@@ -136,12 +142,38 @@ export class AdminOrders implements OnInit {
       },
       error: (err: unknown) => {
         console.error('სტატუსის განახლება ჩავარდა:', err);
-        alert('სტატუსის შეცვლა ვერ მოხერხდა!');
+        this.toastService.show('სტატუსის შეცვლა ვერ მოხერხდა!', 'danger');
       },
     });
   }
 
-  public printOrderInvoice(order: Order): void {
+  public getPaymentMethodLabel(paymentMethod: AdminOrderResponse['paymentMethod']): string {
+    if (paymentMethod === 'BANK_TRANSFER') {
+      return 'საბანკო გადარიცხვა';
+    }
+
+    if (paymentMethod === 'CASH_ON_DELIVERY') {
+      return 'კურიერთან გადახდა';
+    }
+
+    return 'საბანკო გადარიცხვა (ნაგულისხმევი)';
+  }
+
+  private escapeHtml(value: string | number | null | undefined): string {
+    return String(value ?? '').replace(/[&<>"']/g, (character) => {
+      const escapedCharacters: Record<string, string> = {
+        '&': '&amp;',
+        '<': '&lt;',
+        '>': '&gt;',
+        '"': '&quot;',
+        "'": '&#39;',
+      };
+
+      return escapedCharacters[character];
+    });
+  }
+
+  public printOrderInvoice(order: AdminOrderResponse): void {
     const iframe = document.createElement('iframe');
     iframe.style.position = 'fixed';
     iframe.style.right = '0';
@@ -161,7 +193,7 @@ export class AdminOrders implements OnInit {
     const itemsHtml = order.orderItems
       ? order.orderItems
           .map((item) => {
-            const productName = item.productName || item.product?.productName || item.name || '3D პროდუქტი';
+            const productName = this.escapeHtml(item.productName || item.product?.productName || item.name || '3D პროდუქტი');
             const price = item.price ?? item.product?.price ?? 0;
             const quantity = item.quantity || 1;
             const totalItemPrice = quantity * price;
@@ -178,6 +210,24 @@ export class AdminOrders implements OnInit {
           .join('')
       : '';
 
+    const customerName = this.escapeHtml(order.customerName?.trim() || 'მითითებული არ არის');
+    const phoneNumber = this.escapeHtml(order.phoneNumber?.trim() || 'მითითებული არ არის');
+    const city = this.escapeHtml(order.city?.trim() || 'მითითებული არ არის');
+    const address = this.escapeHtml(order.address?.trim() || 'მითითებული არ არის');
+    const paymentMethodLabel = this.getPaymentMethodLabel(order.paymentMethod);
+    const paymentStatus = order.paymentStatus ?? 'PENDING';
+    const paymentInstructions = !order.paymentMethod || order.paymentMethod === 'BANK_TRANSFER'
+      ? `
+        <section class="payment-instructions">
+          <h3>საბანკო გადარიცხვის რეკვიზიტები</h3>
+          <p><strong>მიმღები:</strong> შპს 3DSTUDIO</p>
+          <p><strong>თბს ბანკი (TBC), IBAN:</strong> GE69TB7987945064300037</p>
+          <p><strong>საქართველოს ბანკი (BOG), IBAN:</strong> GE29BG0000000371065543</p>
+          <p><strong>დანიშნულება:</strong> Order #${order.id}</p>
+        </section>
+      `
+      : '';
+
     const invoiceHtml = `
     <!DOCTYPE html>
     <html>
@@ -188,6 +238,8 @@ export class AdminOrders implements OnInit {
           .header { display: flex; justify-content: space-between; border-bottom: 2px solid #ffb703; padding-bottom: 20px; }
           .logo { font-size: 24px; font-weight: bold; color: #111; }
           .info { margin-top: 30px; margin-bottom: 30px; }
+          .payment-instructions { margin-top: 24px; padding: 16px; border: 1px solid #d4a017; background: #fffaf0; }
+          .payment-instructions h3 { margin-top: 0; }
           table { width: 100%; border-collapse: collapse; margin-top: 20px; }
           th { background: #f8f9fa; padding: 10px; text-align: left; font-size: 12px; border-bottom: 2px solid #ddd; }
           .total { margin-top: 30px; text-align: right; font-size: 18px; font-weight: bold; }
@@ -202,12 +254,20 @@ export class AdminOrders implements OnInit {
           </div>
         </div>
         <div class="info">
-          <p><strong>მომხმარებელი:</strong> ${order.userEmail}</p>
-          ${order.companyName ? `<p><strong>კომპანია:</strong> ${order.companyName}</p>` : ''}
-          ${order.taxId ? `<p><strong>საიდენტიფიკაციო კოდი (ს/კ):</strong> ${order.taxId}</p>` : ''}
-          ${order.companyAddress ? `<p><strong>მისამართი:</strong> ${order.companyAddress}</p>` : ''}
+          <p><strong>მომხმარებელი:</strong> ${this.escapeHtml(order.userEmail)}</p>
+          <p><strong>სახელი:</strong> ${customerName}</p>
+          <p><strong>ტელეფონი:</strong> ${phoneNumber}</p>
+          <p><strong>ქალაქი:</strong> ${city}</p>
+          <p><strong>მისამართი:</strong> ${address}</p>
+          ${order.notes?.trim() ? `<p><strong>შენიშვნა:</strong> ${this.escapeHtml(order.notes.trim())}</p>` : ''}
+          <p><strong>გადახდის მეთოდი:</strong> ${paymentMethodLabel}</p>
+          <p><strong>გადახდის სტატუსი:</strong> ${paymentStatus}</p>
+          ${order.companyName ? `<p><strong>კომპანია:</strong> ${this.escapeHtml(order.companyName)}</p>` : ''}
+          ${order.taxId ? `<p><strong>საიდენტიფიკაციო კოდი (ს/კ):</strong> ${this.escapeHtml(order.taxId)}</p>` : ''}
+          ${order.companyAddress ? `<p><strong>მისამართი:</strong> ${this.escapeHtml(order.companyAddress)}</p>` : ''}
           <p><strong>სტატუსი:</strong> ${order.status}</p>
         </div>
+        ${paymentInstructions}
         <table>
           <thead>
             <tr>
@@ -277,24 +337,11 @@ export class AdminOrders implements OnInit {
     const currentData = this.newOrderData();
 
     if (!currentData.userEmail.trim()) {
-      alert('გთხოვთ მიუთითოთ მომხმარებლის ელ-ფოსტა ან ტელეფონი!');
+      this.toastService.show('გთხოვთ მიუთითოთ მომხმარებლის ელ-ფოსტა ან ტელეფონი!', 'info');
       return;
     }
 
-    const payload: DirectOrderRequest = {
-      userEmail: currentData.userEmail,
-      companyName: currentData.companyName,
-      taxId: currentData.taxId,
-      companyAddress: currentData.companyAddress,
-      paymentMethod: 'CASH_ON_DELIVERY',
-      items: currentData.items.map((item) => ({
-        productName: item.productName,
-        quantity: item.quantity,
-        price: item.price,
-      })),
-    };
-
-    this.orderService.createDirectOrder(payload).subscribe({
+    this.orderService.createManualOrder(currentData).subscribe({
       next: (createdOrder: Order) => {
         this.closeCreateModal();
         this.loadAllOrders();
@@ -304,7 +351,7 @@ export class AdminOrders implements OnInit {
       },
       error: (err: unknown) => {
         console.error('ინვოისის შექმნა ჩავარდა:', err);
-        alert('ინვოისის შექმნა ვერ მოხერხდა.');
+        this.toastService.show('ინვოისის შექმნა ვერ მოხერხდა.', 'danger');
       },
     });
   }

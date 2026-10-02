@@ -12,6 +12,8 @@ export interface OrderItem {
   };
 }
 export type OrderStatus = 'PENDING' | 'PAID' | 'SHIPPED' | 'CANCELLED';
+export type PaymentMethod = 'BANK_TRANSFER' | 'CASH_ON_DELIVERY';
+export type PaymentStatus = 'PENDING' | 'PAID';
 
 export interface OrderItemRequest {
   productId?: number;
@@ -23,6 +25,13 @@ export interface OrderItemRequest {
 export interface Order {
   id: number;
   userEmail: string;
+  customerName?: string | null;
+  phoneNumber?: string | null;
+  city?: string | null;
+  address?: string | null;
+  notes?: string | null;
+  paymentMethod?: PaymentMethod | null;
+  paymentStatus?: PaymentStatus | null;
   companyName?: string;  
   taxId?: string;         
   companyAddress?: string;
@@ -33,12 +42,24 @@ export interface Order {
   orderItems?: OrderItem[];
 }
 
+export interface AdminOrderResponse extends Omit<Order, 'customerName' | 'phoneNumber' | 'city' | 'address' | 'notes' | 'paymentMethod' | 'paymentStatus'> {
+  customerName?: string | null;
+  phoneNumber?: string | null;
+  city?: string | null;
+  address?: string | null;
+  notes?: string | null;
+  paymentMethod?: string | null;
+  paymentStatus?: string | null;
+}
+
 export interface DirectOrderRequest {
   userEmail: string;
-  companyName?: string;   
-  taxId?: string;        
-  companyAddress?: string;
-  paymentMethod: string;
+  customerName: string;
+  phoneNumber: string;
+  city: string;
+  address: string;
+  notes: string;
+  paymentMethod: PaymentMethod;
   items: OrderItemRequest[];
 }
 

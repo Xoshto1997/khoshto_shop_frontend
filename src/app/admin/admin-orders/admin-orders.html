@@ -146,6 +146,34 @@
                     <span class="w-2 h-2 rounded-full bg-amber-400"></span>
                     {{ order.userEmail }}
                   </div>
+
+                  <div class="mb-2 text-xs text-amber-200/80">
+                    <span class="font-bold text-white">{{ order.customerName?.trim() || 'სტუმარი' }}</span>
+                    <span class="mx-1.5 text-amber-700">•</span>
+                    <span>{{ order.phoneNumber?.trim() || 'ტელეფონი არ არის' }}</span>
+                  </div>
+
+                  @if (order.city?.trim() || order.address?.trim()) {
+                    <div class="mb-2 text-xs text-amber-200/70">
+                      {{ order.city?.trim() }}{{ order.city?.trim() && order.address?.trim() ? ' ' : '' }}{{ order.address?.trim() }}
+                    </div>
+                  }
+
+                  @if (order.notes) {
+                    <div class="mb-2 text-xs text-amber-200/60 whitespace-pre-wrap">
+                      {{ order.notes }}
+                    </div>
+                  }
+
+                  <div class="flex flex-wrap gap-1.5 mb-2">
+                    <span class="px-2 py-0.5 rounded-full text-[10px] font-bold border border-sky-500/30 bg-sky-500/10 text-sky-300">
+                      {{ getPaymentMethodLabel(order.paymentMethod) }}
+                    </span>
+                    <span class="px-2 py-0.5 rounded-full text-[10px] font-bold border"
+                      [ngClass]="(order.paymentStatus || 'PENDING') === 'PAID' ? 'border-emerald-500/30 bg-emerald-500/10 text-emerald-300' : 'border-amber-500/30 bg-amber-500/10 text-amber-300'">
+                      {{ order.paymentStatus || 'PENDING' }}
+                    </span>
+                  </div>
                   
                   <div class="flex flex-wrap gap-1.5">
                     @for (item of order.orderItems; track item.id) {

@@ -1,6 +1,7 @@
-import { Component, OnInit, signal } from '@angular/core';
+import { Component, OnInit, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, RouterLink } from '@angular/router';
+import { ToastService } from '../../core/services/toast';
 
 @Component({
 
@@ -9,6 +10,7 @@ import { ActivatedRoute, RouterLink } from '@angular/router';
   templateUrl: './order-success.html'
 })
 export class OrderSuccess implements OnInit {
+  private readonly toastService = inject(ToastService);
   orderId = signal<string | null>(null);
   paymentMethod = signal<string>('BANK_TRANSFER');
 
@@ -23,8 +25,12 @@ export class OrderSuccess implements OnInit {
     });
   }
 
-  copyToClipboard(text: string) {
-    navigator.clipboard.writeText(text);
-    alert('ანგარიშის ნომერი დაკოპირდა!');
+  async copyToClipboard(text: string): Promise<void> {
+    try {
+      await navigator.clipboard.writeText(text);
+      this.toastService.show('ანგარიშის ნომერი დაკოპირდა!', 'success');
+    } catch {
+      this.toastService.show('ანგარიშის ნომრის კოპირება ვერ მოხერხდა.', 'danger');
+    }
   }
 }

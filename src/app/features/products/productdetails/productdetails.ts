@@ -9,6 +9,7 @@ import { Product } from '../../../models/product.model';
 import { Review } from '../../../models/review.model';
 import { CurrencyService } from '../../../core/services/currency-service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { ToastService } from '../../../core/services/toast';
 
 @Component({
   selector: 'app-product-details',
@@ -21,6 +22,7 @@ export class ProductDetails implements OnInit {
   private readonly productService = inject(ProductService);
   private readonly reviewService = inject(ReviewService);
   private readonly cartService = inject(CartService);
+  private readonly toastService = inject(ToastService);
   public readonly currencyService = inject(CurrencyService);
   private readonly destroyRef = inject(DestroyRef); 
 
@@ -126,12 +128,12 @@ export class ProductDetails implements OnInit {
     const commentText = this.newCommentText().trim();
 
     if (!currentProduct || !currentProduct.id) {
-      alert('პროდუქტის იდენტიფიკატორი არასწორია.');
+      this.toastService.show('პროდუქტის იდენტიფიკატორი არასწორია.', 'danger');
       return;
     }
 
     if (!commentText) {
-      alert('გთხოვთ ჩაწეროთ კომენტარი!');
+      this.toastService.show('გთხოვთ ჩაწეროთ კომენტარი!', 'info');
       return;
     }
 
@@ -150,12 +152,12 @@ export class ProductDetails implements OnInit {
           this.newCommentText.set('');
           this.newRating.set(5);
           this.isSubmittingReview.set(false);
-          alert('გმადლობთ! თქვენი შეფასება წარმატებით დაემატა.');
+          this.toastService.show('გმადლობთ! თქვენი შეფასება წარმატებით დაემატა.', 'success');
         },
         error: (err) => {
           console.error('შეფასების გაგზავნა ჩავარდა:', err);
           this.isSubmittingReview.set(false);
-          alert('შეფასების დამატება ვერ მოხერხდა. გთხოვთ დარწმუნდეთ, რომ ავტორიზებული ხართ.');
+          this.toastService.show('შეფასების დამატება ვერ მოხერხდა. გთხოვთ დარწმუნდეთ, რომ ავტორიზებული ხართ.', 'danger');
         },
       });
   }
@@ -169,15 +171,15 @@ export class ProductDetails implements OnInit {
         .pipe(takeUntilDestroyed(this.destroyRef))
         .subscribe({
           next: (): void => {
-            alert('პროდუქტი წარმატებით დაემატა კალათაში!');
+            this.toastService.show('პროდუქტი წარმატებით დაემატა კალათაში!', 'success');
           },
           error: (err): void => {
             console.error('კალათაში დამატება ჩავარდა:', err);
-            alert('გთხოვთ ჯერ გაიაროთ ავტორიზაცია!');
+            this.toastService.show('გთხოვთ ჯერ გაიაროთ ავტორიზაცია!', 'danger');
           },
         });
     } else {
-      alert('პროდუქტის იდენტიფიკატორი არასწორია.');
+      this.toastService.show('პროდუქტის იდენტიფიკატორი არასწორია.', 'danger');
     }
   }
 }

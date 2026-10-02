@@ -5,10 +5,11 @@ import { CommonModule } from '@angular/common';
 import { Footer } from './shared/ui/footer/footer';
 import { CartService } from './core/services/cart-service';
 import { CurrencyService } from './core/services/currency-service';
+import { ToastContainer } from './components/toast-container/toast-container';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, Footer, CommonModule, RouterModule],
+  imports: [RouterOutlet, Footer, ToastContainer, CommonModule, RouterModule],
   templateUrl: './app.html',
   styleUrl: './app.css',
 })

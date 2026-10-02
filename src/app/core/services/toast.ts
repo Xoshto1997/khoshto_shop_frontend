@@ -15,4 +15,8 @@ export class ToastService {
       this.toasts.update(old => old.filter(t => t.id !== id));
     }, 3000);
   }
+
+  dismiss(id: number): void {
+    this.toasts.update((messages) => messages.filter((toast) => toast.id !== id));
+  }
 }

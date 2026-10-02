@@ -1,4 +1,4 @@
 export const environment = {
   production: false,
-  apiUrl: 'https://3dstudio.ge/api'
+  apiUrl: 'http://localhost:8090/api'
 };
