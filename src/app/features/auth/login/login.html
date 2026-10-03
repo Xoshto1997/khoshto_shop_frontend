@@ -1,6 +1,6 @@
 <div class="auth-screen text-zinc-100 min-h-screen grid lg:grid-cols-2 bg-zinc-950 font-sans selection:bg-amber-500/30 selection:text-amber-200">
   <!-- 🎨 Visual Section -->
-  <section class="auth-visual relative hidden lg:flex flex-col justify-between p-12 overflow-hidden border-r border-zinc-800/60">
+  <section class="auth-visual relative flex min-h-[300px] flex-col justify-between p-5 overflow-hidden border-b border-zinc-800/60 sm:min-h-[360px] sm:p-8 lg:min-h-screen lg:border-b-0 lg:border-r lg:p-12">
     <!-- Background Image with Ambient Glow -->
     <img
       src="/3dstudio-back.jpg"
@@ -16,12 +16,12 @@
     </a>
 
     <!-- Visual Copy -->
-    <div class="auth-visual-copy relative z-10 max-w-lg space-y-4">
+    <div class="auth-visual-copy relative z-10 max-w-lg space-y-3 sm:space-y-4">
       <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/10 border border-amber-500/20 text-amber-400 text-xs font-semibold backdrop-blur-md">
         <span class="w-1.5 h-1.5 rounded-full bg-amber-400 animate-pulse"></span>
         3D ინოვაციები · თანამედროვე ხედვა
       </div>
-      <h1 class="text-4xl xl:text-5xl font-black text-white leading-tight tracking-tight">
+      <h1 class="text-2xl sm:text-4xl xl:text-5xl font-black text-white leading-tight tracking-tight">
         შექმენი შენი<br />
         <span class="bg-gradient-to-r from-amber-200 via-amber-400 to-amber-600 bg-clip-text text-transparent">განსაკუთრებული სტილი.</span>
       </h1>
@@ -31,7 +31,7 @@
     </div>
 
     <!-- Caption Footer -->
-    <div class="auth-image-caption relative z-10 flex items-center justify-between text-[11px] font-mono tracking-widest text-zinc-500 uppercase border-t border-zinc-800/80 pt-6">
+    <div class="auth-image-caption relative z-10 flex items-center justify-between text-[9px] sm:text-[11px] font-mono tracking-widest text-zinc-500 uppercase border-t border-zinc-800/80 pt-3 sm:pt-6 mt-4">
       <span>3DSTUDIO / COLLECTION</span>
       <span>EST. 2026</span>
     </div>
@@ -57,10 +57,8 @@
       @if (!isMfaRequired()) {
         <!-- 🔑 Login Form View -->
         <div class="auth-form-heading text-center mb-8">
-          <div class="auth-emblem w-14 h-14 bg-gradient-to-br from-amber-500/20 to-amber-950/40 text-amber-400 border border-amber-500/30 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-inner shadow-amber-500/10">
-            <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z"/>
-            </svg>
+          <div class="auth-emblem relative w-20 h-20 bg-gradient-to-br from-amber-400/30 to-amber-950/70 border border-amber-400/40 rounded-3xl flex items-center justify-center mx-auto mb-5 p-1.5 overflow-hidden ring-4 ring-amber-500/5 shadow-xl shadow-amber-950/50">
+            <img src="/login-logo.PNG" alt="3DSTUDIO ლოგო" class="w-full h-full object-cover rounded-2xl" />
           </div>
           <span class="auth-kicker text-[10px] uppercase tracking-widest font-extrabold text-amber-400 bg-amber-500/10 px-3 py-1 rounded-full border border-amber-500/20">3DSTUDIO Portal</span>
           <h2 class="auth-title text-2xl font-black text-white tracking-tight mt-3">კეთილი იყოს თქვენი მობრძანება</h2>

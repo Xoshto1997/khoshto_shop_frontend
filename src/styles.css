@@ -5,6 +5,12 @@
 @tailwind utilities;
 
 @layer base {
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+
   html {
     scroll-behavior: smooth;
     color-scheme: dark;
@@ -19,6 +25,28 @@
     overflow-x: hidden;
   }
 
+  img,
+  svg,
+  video,
+  canvas,
+  object,
+  iframe {
+    display: block;
+    max-width: 100%;
+    height: auto;
+  }
+
+  button,
+  input,
+  textarea,
+  select {
+    font: inherit;
+  }
+
+  a {
+    -webkit-tap-highlight-color: transparent;
+  }
+
   /* Custom Selection Highlight in Amber/Gold */
   ::selection {
     background-color: rgba(217, 119, 6, 0.3); /* Tailwind amber-600 with opacity */
@@ -30,6 +58,27 @@
     scrollbar-width: thin;
     scrollbar-color: #27272a #09090b;
   }
+
+  @media (max-width: 640px) {
+    body {
+      font-size: 15px;
+    }
+
+    .auth-screen {
+      grid-template-columns: 1fr;
+    }
+
+    .auth-main {
+      padding: 1rem;
+    }
+
+    .auth-content {
+      width: min(100%, 100%);
+      max-width: 100%;
+      padding: 1.25rem;
+    }
+  }
+
 }
 
 /* Typography Overrides */
