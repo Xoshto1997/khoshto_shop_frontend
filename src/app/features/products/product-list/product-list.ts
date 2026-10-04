@@ -1,4 +1,4 @@
-import { Component, OnInit, inject, ChangeDetectionStrategy } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ProductService } from '../../../core/services/product';
 import { ProductCard } from '../product-card/product-card';
@@ -10,6 +10,8 @@ import { ProductCard } from '../product-card/product-card';
 export class ProductListComponent implements OnInit {
   private readonly productService = inject(ProductService);
 
+  @ViewChild('productsSection') private productsSection!: ElementRef<HTMLElement>;
+
   public readonly currentPage = this.productService.currentPage;
   public readonly totalPages = this.productService.totalPages;
   
@@ -17,6 +19,10 @@ export class ProductListComponent implements OnInit {
 
   ngOnInit() {
     this.productService.getAllProducts();
+  }
+
+  scrollToProducts(): void {
+    this.productsSection.nativeElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
 
   onPageChange(pageIndex: number): void {
