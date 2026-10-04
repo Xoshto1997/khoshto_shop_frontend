@@ -182,4 +182,98 @@ export class ProductDetails implements OnInit {
       this.toastService.show('პროდუქტის იდენტიფიკატორი არასწორია.', 'danger');
     }
   }
+
+  public async quickBuy(): Promise<void> {
+    const currentProduct = this.product();
+
+    if (!currentProduct || currentProduct.id === undefined) {
+      this.toastService.show('პროდუქტის იდენტიფიკატორი არასწორია.', 'danger');
+      return;
+    }
+
+    const message = [
+      'გამარჯობა! მსურს სწრაფი შეკვეთა:',
+      `პროდუქტი: ${currentProduct.productName}`,
+      `ფასი: ${this.currencyService.formatPrice(currentProduct.price)}`,
+      `ბმული: ${window.location.origin}/product/${currentProduct.id}`,
+    ].join('\n');
+
+    const messengerWindow = window.open('about:blank', '_blank');
+    if (messengerWindow) {
+      messengerWindow.opener = null;
+      const countdownDocument = messengerWindow.document;
+      countdownDocument.title = 'Messenger-ში გადასვლა';
+      countdownDocument.body.innerHTML = `
+        <main style="min-height:100vh;display:grid;place-items:center;background:#09090b;color:#f4f4f5;font-family:Arial,sans-serif;text-align:center">
+          <div>
+            <p style="font-size:18px;font-weight:700">Messenger გაიხსნება</p>
+            <p style="color:#fbbf24">გთხოვთ დაელოდოთ <span id="countdown">3</span> წამი...</p>
+            <p style="max-width:420px;margin:16px auto 0;color:#a1a1aa;line-height:1.6">გთხოვთ დაელოდოთ, თქვენ მიერ მოწონებული პროდუქტის დეტალები დაკოპირებულია და შეგიძლიათ პირდაპირ ჩასვათ მესენჯერში</p>
+          </div>
+        </main>`;
+
+      let secondsRemaining = 3;
+      const countdown = countdownDocument.getElementById('countdown');
+      const timer = window.setInterval(() => {
+        if (messengerWindow.closed) {
+          window.clearInterval(timer);
+          return;
+        }
+
+        secondsRemaining -= 1;
+        if (secondsRemaining <= 0) {
+          window.clearInterval(timer);
+          messengerWindow.location.replace('https://m.me/61587657993668');
+          return;
+        }
+
+        if (countdown) {
+          countdown.textContent = String(secondsRemaining);
+        }
+      }, 1000);
+    } else {
+      this.toastService.show('Messenger-ის ახალი ჩანართი დაიბლოკა. გთხოვთ დაუშვათ pop-up ფანჯრები.', 'danger');
+    }
+
+    try {
+      await this.copyOrderMessage(message);
+      this.toastService.show('შეკვეთის ტექსტი დაკოპირდა. ჩატში ჩასვით გასაგზავნად.', 'success');
+    } catch (error) {
+      console.error('შეკვეთის ტექსტის დაკოპირება ვერ მოხერხდა:', error);
+      this.toastService.show(
+        `Messenger გაიხსნა, მაგრამ ტექსტი ვერ დაკოპირდა. მიუთითეთ პროდუქტი: ${currentProduct.productName}`,
+        'info',
+      );
+    }
+  }
+
+  private async copyOrderMessage(message: string): Promise<void> {
+    try {
+      if (navigator.clipboard?.writeText) {
+        await navigator.clipboard.writeText(message);
+        return;
+      }
+    } catch {
+      // Fall back for browsers or contexts that deny Clipboard API access.
+    }
+
+    const textarea = document.createElement('textarea');
+    textarea.value = message;
+    textarea.setAttribute('readonly', '');
+    textarea.style.position = 'fixed';
+    textarea.style.opacity = '0';
+    document.body.appendChild(textarea);
+
+    let copied = false;
+    try {
+      textarea.select();
+      copied = document.execCommand('copy');
+    } finally {
+      textarea.remove();
+    }
+
+    if (!copied) {
+      throw new Error('Clipboard API and fallback copy both failed.');
+    }
+  }
 }
