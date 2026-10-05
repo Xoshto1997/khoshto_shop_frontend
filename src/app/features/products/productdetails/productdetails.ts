@@ -183,7 +183,7 @@ export class ProductDetails implements OnInit {
     }
   }
 
-  public async quickBuy(): Promise<void> {
+  public quickBuy(): void {
     const currentProduct = this.product();
 
     if (!currentProduct || currentProduct.id === undefined) {
@@ -191,6 +191,13 @@ export class ProductDetails implements OnInit {
       return;
     }
 
+    this.toastService.confirm(
+      'გსურთ შეკვეთის ტექსტის დაკოპირება და Messenger-ში გადასვლა?',
+      () => void this.completeQuickBuy(currentProduct),
+    );
+  }
+
+  private async completeQuickBuy(currentProduct: Product): Promise<void> {
     const message = [
       'გამარჯობა! მსურს სწრაფი შეკვეთა:',
       `პროდუქტი: ${currentProduct.productName}`,

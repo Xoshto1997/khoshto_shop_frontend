@@ -16,6 +16,19 @@ export class ToastService {
     }, 3000);
   }
 
+  confirm(message: string, onConfirm: () => void): void {
+    const id = Date.now();
+    this.toasts.update((old) => [...old, { id, message, type: 'confirmation', onConfirm }]);
+  }
+
+  accept(id: number): void {
+    const toast = this.toasts().find((item) => item.id === id);
+    this.dismiss(id);
+    if (toast?.type === 'confirmation') {
+      toast.onConfirm();
+    }
+  }
+
   dismiss(id: number): void {
     this.toasts.update((messages) => messages.filter((toast) => toast.id !== id));
   }

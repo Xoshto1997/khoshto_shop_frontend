@@ -4,7 +4,7 @@
          [ngClass]="{
            'bg-zinc-950/95 border-amber-500/40 shadow-amber-500/10': toast.type === 'success',
            'bg-zinc-950/95 border-rose-500/40 shadow-rose-900/20': toast.type === 'danger',
-           'bg-zinc-950/95 border-sky-500/40 shadow-sky-500/10': toast.type === 'info'
+           'bg-zinc-950/95 border-sky-500/40 shadow-sky-500/10': toast.type === 'info' || toast.type === 'confirmation'
          }"
          [attr.role]="toast.type === 'danger' ? 'alert' : 'status'">
       
@@ -24,7 +24,7 @@
         </div>
       }
       
-      @if (toast.type === 'info') { 
+      @if (toast.type === 'info' || toast.type === 'confirmation') {
         <div class="w-8 h-8 bg-black/40 rounded-xl flex items-center justify-center text-sky-300 shadow-inner border border-sky-500/30 shrink-0">
           <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true">
             <path stroke-linecap="round" stroke-linejoin="round" d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.852l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z"/>
@@ -32,8 +32,20 @@
         </div>
       }
 
-      <p class="text-xs sm:text-sm font-bold tracking-tight leading-snug text-white/90">{{ toast.message }}</p>
-      <button type="button" (click)="toastService.dismiss(toast.id)" [attr.aria-label]="'შეტყობინების დახურვა'" class="ml-auto p-1 text-zinc-400 hover:text-white rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-400">
+      <div class="flex-1 min-w-0">
+        <p class="text-xs sm:text-sm font-bold tracking-tight leading-snug text-white/90">{{ toast.message }}</p>
+        @if (toast.type === 'confirmation') {
+          <div class="mt-3 flex justify-end gap-2">
+            <button type="button" (click)="toastService.dismiss(toast.id)" class="px-3 py-1.5 rounded-lg border border-zinc-700 text-xs font-bold text-zinc-300 hover:bg-zinc-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-400">
+              არა
+            </button>
+            <button type="button" (click)="toastService.accept(toast.id)" class="px-3 py-1.5 rounded-lg bg-sky-600 text-xs font-bold text-white hover:bg-sky-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-300">
+              კი, დავაკოპირო
+            </button>
+          </div>
+        }
+      </div>
+      <button type="button" (click)="toastService.dismiss(toast.id)" [attr.aria-label]="'შეტყობინების დახურვა'" class="p-1 text-zinc-400 hover:text-white rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-400">
         <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
           <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
         </svg>
