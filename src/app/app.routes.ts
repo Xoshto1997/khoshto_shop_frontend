@@ -55,6 +55,9 @@ export const routes: Routes = [
   { path: 'forgot-password', loadComponent: () => import('./features/auth/forgot-password/forgot-password').then((c) => c.ForgotPassword) },
   { path: 'reset-password', loadComponent: () => import('./features/auth/reset-password/reset-password').then((c) => c.ResetPassword) },
   { path: 'order-success', loadComponent: () => import('./admin/order-success/order-success').then((c) => c.OrderSuccess) },
+  { path: 'contact', loadComponent: () => import('./features/contact/contact').then((c) => c.Contact) },
+  { path: 'faq', loadComponent: () => import('./features/faq/faq').then((c) => c.Faq) },
+  { path: 'license', loadComponent: () => import('./features/license/license').then((c) => c.License) },
 
-  { path: '**', redirectTo: '' },
+  { path: '**', loadComponent: () => import('./features/not-found/not-found').then((c) => c.NotFound) },
 ];
