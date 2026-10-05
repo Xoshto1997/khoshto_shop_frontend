@@ -10,6 +10,9 @@ import { Review } from '../../../models/review.model';
 import { CurrencyService } from '../../../core/services/currency-service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ToastService } from '../../../core/services/toast';
+import { SeoService } from '../../../core/services/seo';
+import { filter } from 'rxjs';
+import { NavigationEnd } from '@angular/router';
 
 @Component({
   selector: 'app-product-details',
@@ -23,6 +26,7 @@ export class ProductDetails implements OnInit {
   private readonly reviewService = inject(ReviewService);
   private readonly cartService = inject(CartService);
   private readonly toastService = inject(ToastService);
+  private readonly seoService = inject(SeoService);
   public readonly currencyService = inject(CurrencyService);
   private readonly destroyRef = inject(DestroyRef); 
 
@@ -61,10 +65,23 @@ export class ProductDetails implements OnInit {
     if (productFromState) {
       this.product.set(productFromState);
       this.isLoadingProduct.set(false);
+      this.updateProductSeo(productFromState);
     }
   }
 
   public ngOnInit(): void {
+    this.router.events
+      .pipe(
+        filter((event): event is NavigationEnd => event instanceof NavigationEnd),
+        takeUntilDestroyed(this.destroyRef),
+      )
+      .subscribe(() => {
+        const currentProduct = this.product();
+        if (currentProduct) {
+          this.updateProductSeo(currentProduct);
+        }
+      });
+
     this.route.paramMap
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((params) => {
@@ -87,12 +104,27 @@ export class ProductDetails implements OnInit {
         next: (data: Product): void => {
           this.product.set(data);
           this.isLoadingProduct.set(false);
+          this.updateProductSeo(data);
         },
         error: (err): void => {
           console.error('პროდუქტი ვერ მოიძებნა', err);
           this.isLoadingProduct.set(false);
         },
       });
+  }
+
+  private updateProductSeo(product: Product): void {
+    const description = product.description.trim();
+    this.seoService.update(
+      {
+        title: `${product.productName} | 3DSTUDIO`,
+        description: description
+          ? `${description.slice(0, 155)}${description.length > 155 ? '…' : ''}`
+          : `იხილეთ ${product.productName} 3D Studio-ს ონლაინ მაღაზიაში.`,
+        image: product.coverImage,
+      },
+      `/product/${product.id}`,
+    );
   }
 
   private loadReviews(productId: number): void {
